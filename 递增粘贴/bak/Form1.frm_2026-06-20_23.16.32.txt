@@ -279,7 +279,6 @@ Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
    serial_width = Len(serial)
    num_serial   = ValInt(serial)
    UpdateDisplay()
-   AfxSetClipboardText(Label_Show.Caption)
 End Sub
 
 '[Form1.Command_Copy]事件 : 单击

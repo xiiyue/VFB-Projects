@@ -256,21 +256,6 @@ Function FormatSerial(num As Integer, wid As Integer) As String
     Return result
 End Function
 
-' 更新显示的子过程（基于全局变量 num_serial, serial_width, prefix, suffix）
-Sub UpdateDisplay()
-   ' 格式化当前序列号
-   Dim now_serial As String
-   now_serial = FormatSerial(num_serial, serial_width)
-   
-   ' 拼接完整字符串
-   Dim NowInfo As String
-   NowInfo = prefix & now_serial & suffix
-   
-   ' 更新标签显示
-   Label_Show.Caption = NowInfo
-End Sub
-
-
 '[Form1.Command_Set]事件 : 单击
 'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
 'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
@@ -278,35 +263,15 @@ Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
    Form2.Show(Form1.hWnd, True)
    serial_width = Len(serial)
    num_serial   = ValInt(serial)
-   UpdateDisplay()
-   AfxSetClipboardText(Label_Show.Caption)
+   ' 调用函数，获取格式化后的当前序列号字符串
+   Dim now_serial As String
+   now_serial = FormatSerial(num_serial, serial_width)
+   
+   ' 整合最终显示字符串
+   DimP NowInfo As String
+   NowInfo = prefix & now_serial & suffix
+   Label_Show.Text = NowInfo
 End Sub
-
-'[Form1.Command_Copy]事件 : 单击
-'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
-Sub Form1_Command_Copy_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
-
-    Select Case ControlIndex
-        Case 0
-            AfxSetClipboardText(Label_Show.Caption)
-        Case 1
-            ' num_serial 减 1
-            num_serial = num_serial - 1
-            UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)
-            
-        Case 2
-            ' num_serial 加 1
-            num_serial = num_serial + 1
-            UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)           
-        Case Else
-            ' 无操作
-    End Select
-    
-End Sub
-
 
 
 

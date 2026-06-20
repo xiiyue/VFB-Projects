@@ -238,7 +238,7 @@ DimP text_serial  As String
 DimP num_serial   As Integer
 DimP serial_width As Integer
 
-' 格式化序列号函数(参数：数字，长度)
+' 格式化序列号函数(参数)
 Function FormatSerial(num As Integer, wid As Integer) As String
     Dim limit As Integer
     Dim result As String
@@ -256,21 +256,6 @@ Function FormatSerial(num As Integer, wid As Integer) As String
     Return result
 End Function
 
-' 更新显示的子过程（基于全局变量 num_serial, serial_width, prefix, suffix）
-Sub UpdateDisplay()
-   ' 格式化当前序列号
-   Dim now_serial As String
-   now_serial = FormatSerial(num_serial, serial_width)
-   
-   ' 拼接完整字符串
-   Dim NowInfo As String
-   NowInfo = prefix & now_serial & suffix
-   
-   ' 更新标签显示
-   Label_Show.Caption = NowInfo
-End Sub
-
-
 '[Form1.Command_Set]事件 : 单击
 'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
 'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
@@ -278,35 +263,26 @@ Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
    Form2.Show(Form1.hWnd, True)
    serial_width = Len(serial)
    num_serial   = ValInt(serial)
-   UpdateDisplay()
-   AfxSetClipboardText(Label_Show.Caption)
+   ' 将 num_serial 格式化为宽度为 serial_width 的字符串（保留位数）
+   Dim serial_display As String
+   Dim num_str        As String
+   num_str = Trim(Str(num_serial)) ' 数值转字符串，去掉前导空格
+   
+   If Len(num_str) <= serial_width Then
+      ' 不足宽度，前面补 '0'
+      serial_display = Right(String(serial_width, "0") & num_str, serial_width)
+   Else
+      ' 超过宽度，直接显示实际数字（不补零）
+      serial_display = num_str
+   End If
+   
+   ' 4. 拼接最终显示信息
+   Dim NowInfo As String
+   NowInfo = prefix & serial_display & suffix
+   
+   ' 5. 显示到 Label_Show 上（假设你的标签控件名为 Label_Show）
+   Label_Show.Caption = NowInfo
 End Sub
-
-'[Form1.Command_Copy]事件 : 单击
-'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
-Sub Form1_Command_Copy_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
-
-    Select Case ControlIndex
-        Case 0
-            AfxSetClipboardText(Label_Show.Caption)
-        Case 1
-            ' num_serial 减 1
-            num_serial = num_serial - 1
-            UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)
-            
-        Case 2
-            ' num_serial 加 1
-            num_serial = num_serial + 1
-            UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)           
-        Case Else
-            ' 无操作
-    End Select
-    
-End Sub
-
 
 
 

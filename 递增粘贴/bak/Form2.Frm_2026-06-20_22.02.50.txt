@@ -313,37 +313,16 @@ ToolTipBalloon=False
 
 
 [AllCode]
+'这是标准的工程模版，你也可做自己的模版。
+'写好工程，复制全部文件到VFB软件文件夹里【template】里即可，子文件夹名为 VFB新建工程里显示的名称
+'快去打造属于你自己的工程模版吧。
+
 '[Form2.Text1]事件 : 文本已经被修改（修改前用 EN_UPDATE
 'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
 'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
 Sub Form2_Text1_EN_Change(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
-    Select Case ControlIndex
-        Case 0
-            prefix = Text1(ControlIndex).Text
-        Case 1
-            serial = Trim(Text1(ControlIndex).Text)   ' 去除首尾空格
-        Case 2
-            suffix = Text1(ControlIndex).Text
-    End Select
-   Label2.Caption = prefix & serial & suffix
+prefix = Tex
+
 End Sub
-
-'[Form2.Command1]事件 : 单击
-'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
-Sub Form2_Command1_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
-   Me.Close()
-End Sub
-
-'[Form2]事件 : 窗口完全显示后。
-'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
-Sub Form2_Shown(hWndForm As hWnd, UserData As Integer)
-   Text1(0).Text = prefix
-   Text1(1).Text = serial
-   Text1(2).Text = suffix
-End Sub
-
-
 
 

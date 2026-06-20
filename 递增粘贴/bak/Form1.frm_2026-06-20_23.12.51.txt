@@ -267,7 +267,7 @@ Sub UpdateDisplay()
    NowInfo = prefix & now_serial & suffix
    
    ' 更新标签显示
-   Label_Show.Caption = NowInfo
+   Label_Show.Text = NowInfo
 End Sub
 
 
@@ -279,7 +279,6 @@ Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
    serial_width = Len(serial)
    num_serial   = ValInt(serial)
    UpdateDisplay()
-   AfxSetClipboardText(Label_Show.Caption)
 End Sub
 
 '[Form1.Command_Copy]事件 : 单击
@@ -289,22 +288,30 @@ Sub Form1_Command_Copy_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndCo
 
     Select Case ControlIndex
         Case 0
-            AfxSetClipboardText(Label_Show.Caption)
+            ' 直接复制当前显示的内容（不变）
+            AfxSetClipboardText(Label_Show.Text)
+            
         Case 1
             ' num_serial 减 1
             num_serial = num_serial - 1
+            ' 更新显示（调用子过程）
             UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)
+            ' 复制到剪贴板
+            AfxSetClipboardText(Label_Show.Text)
             
         Case 2
             ' num_serial 加 1
             num_serial = num_serial + 1
+            ' 更新显示（调用子过程）
             UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)           
+            ' 复制到剪贴板
+            AfxSetClipboardText(Label_Show.Text)
+            
         Case Else
             ' 无操作
     End Select
     
+
 End Sub
 
 

@@ -238,38 +238,6 @@ DimP text_serial  As String
 DimP num_serial   As Integer
 DimP serial_width As Integer
 
-' 格式化序列号函数(参数：数字，长度)
-Function FormatSerial(num As Integer, wid As Integer) As String
-    Dim limit As Integer
-    Dim result As String
-    
-    limit = 10 ^ wid   ' 计算临界值，如 wid=3 则 limit=1000
-    
-    If num < limit Then
-        ' 不足 wid 位，补前导零
-        result = Right(String(wid, Asc("0")) & Trim(Str(num)), wid)
-    Else
-        ' 超过或等于 limit，直接显示数字（去除多余空格）
-        result = Trim(Str(num))
-    End If
-    
-    Return result
-End Function
-
-' 更新显示的子过程（基于全局变量 num_serial, serial_width, prefix, suffix）
-Sub UpdateDisplay()
-   ' 格式化当前序列号
-   Dim now_serial As String
-   now_serial = FormatSerial(num_serial, serial_width)
-   
-   ' 拼接完整字符串
-   Dim NowInfo As String
-   NowInfo = prefix & now_serial & suffix
-   
-   ' 更新标签显示
-   Label_Show.Caption = NowInfo
-End Sub
-
 
 '[Form1.Command_Set]事件 : 单击
 'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
@@ -277,38 +245,8 @@ End Sub
 Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
    Form2.Show(Form1.hWnd, True)
    serial_width = Len(serial)
-   num_serial   = ValInt(serial)
-   UpdateDisplay()
-   AfxSetClipboardText(Label_Show.Caption)
+   num_serial = ValInt(serial)
 End Sub
-
-'[Form1.Command_Copy]事件 : 单击
-'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
-Sub Form1_Command_Copy_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
-
-    Select Case ControlIndex
-        Case 0
-            AfxSetClipboardText(Label_Show.Caption)
-        Case 1
-            ' num_serial 减 1
-            num_serial = num_serial - 1
-            UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)
-            
-        Case 2
-            ' num_serial 加 1
-            num_serial = num_serial + 1
-            UpdateDisplay()
-            AfxSetClipboardText(Label_Show.Caption)           
-        Case Else
-            ' 无操作
-    End Select
-    
-End Sub
-
-
-
 
 
 

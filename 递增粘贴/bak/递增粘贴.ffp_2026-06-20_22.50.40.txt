@@ -24,7 +24,7 @@ Build=0
 FileMajor=1
 FileMinor=0
 FileRevision=0
-FileBuild=6
+FileBuild=2
 AutoIncrement=3
 DefaultCompiler=32
 Comments=
@@ -35,10 +35,11 @@ LegalTrademarks=
 ProductName=
 
 [Objects]
-Form=.\forms\Form1.frm|39|1774|Startup|Yes|
-Form=.\forms\Form2.Frm|0|1365||Yes|
+Form=.\forms\Form1.frm|34|2099|Startup|Yes|
+Form=.\forms\Form2.Frm|0|1134||Yes|
 
-TopTab=.\forms\Form1.frm|True|0|39|1774
+TopTab=.\forms\Form1.frm|True|1|34|2099
+TopTab=.\forms\Form2.Frm|False|0|0|1134
 #END_MAIN_PROPERTIES#
 [FF_APPSTART_START]
 '************ 应用程序起始模块 ************

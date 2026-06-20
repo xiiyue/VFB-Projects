@@ -1,0 +1,3 @@
+# 忽略所有名为 Release 或 Release64 的文件夹及其内部文件
+Release/
+Release64/
