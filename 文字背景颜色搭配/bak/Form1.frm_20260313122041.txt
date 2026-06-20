@@ -1,0 +1,1157 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.8
+Locked=0
+
+[Form]
+Name=Form1
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_THICKFRAME,WS_CAPTION,WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_VISIBLE,WS_EX_WINDOWEDGE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_POPUP,WS_SIZEBOX
+Style=3 - 常规窗口
+Icon=
+Caption=文字配色
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=825
+Height=511
+TopMost=False
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=True
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Label]
+Name=标题
+Help=
+Index=4
+Style=0 - 无边框
+Caption=五级标题
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=霞鹜文楷 GB 屏幕阅读版 R,15
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=300
+Top=270
+Width=180
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=标题
+Help=
+Index=3
+Style=0 - 无边框
+Caption=四级标题
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=霞鹜文楷 GB 屏幕阅读版 R,16
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=300
+Top=230
+Width=180
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=标题
+Help=
+Index=2
+Style=0 - 无边框
+Caption=三级标题
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=霞鹜文楷 GB 屏幕阅读版 R,18
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=300
+Top=190
+Width=180
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=标题
+Help=
+Index=1
+Style=0 - 无边框
+Caption=二级标题
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=霞鹜文楷 GB 屏幕阅读版 R,22
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=300
+Top=140
+Width=180
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=标题
+Help=
+Index=0
+Style=0 - 无边框
+Caption=一级标题
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=霞鹜文楷 GB 屏幕阅读版 R,26
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=300
+Top=90
+Width=180
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=背景
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=本段为正文示例，包含中文标点符号、英文单词（如 readability）及数字 123。这是第二行，用于预览多行文本的实际效果。你可以观察当前正文颜色在所选背景上的清晰程度，并判断长时间阅读是否舒适。
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=RGB(255,255,255)
+Font=霞鹜文楷 GB 屏幕阅读版 R,14
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=10
+Top=10
+Width=790
+Height=300
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=0
+Style=0 - 无边框
+Caption=背景色
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=80
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=1
+Style=0 - 无边框
+Caption=正文色
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=180
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=2
+Style=0 - 无边框
+Caption=标题1
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=280
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=3
+Style=0 - 无边框
+Caption=标题2
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=390
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=4
+Style=0 - 无边框
+Caption=标题3
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=480
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=5
+Style=0 - 无边框
+Caption=标题4
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=580
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=6
+Style=0 - 无边框
+Caption=标题5
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=680
+Top=330
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=7
+Style=0 - 无边框
+Caption=HEX
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=40
+Top=360
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=8
+Style=0 - 无边框
+Caption=RGB
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=0 - 左对齐
+Prefix=True
+Ellipsis=False
+Left=40
+Top=400
+Width=50
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[TextBox]
+Name=Hex背
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=ffffff
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=80
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=Hex正
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=000000
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=180
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=Hex标
+Help=
+Index=0
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=000000
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=280
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB背
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=255 255 255
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=80
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB正
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0 0 0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=180
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB标
+Help=
+Index=0
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0 0 0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=280
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB标
+Help=
+Index=1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0 0 0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=380
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=Hex标
+Help=
+Index=1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=000000
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=380
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=Hex标
+Help=
+Index=2
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=000000
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=480
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=Hex标
+Help=
+Index=3
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=000000
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=580
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=Hex标
+Help=
+Index=4
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=000000
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=680
+Top=360
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB标
+Help=
+Index=2
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0 0 0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=480
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB标
+Help=
+Index=3
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0 0 0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=580
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[TextBox]
+Name=RGB标
+Help=
+Index=4
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0 0 0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=680
+Top=400
+Width=90
+Height=24
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[Button]
+Name=Command1
+Help=
+Index=-1
+Caption=标题设为正文色
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,14
+Left=40
+Top=430
+Width=150
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command2
+Help=
+Index=-1
+Caption=确  认
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,14
+Left=290
+Top=430
+Width=160
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command3
+Help=
+Index=-1
+Caption=复制方案到剪贴板
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,14
+Left=560
+Top=430
+Width=220
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+DimP 正在更新 As Boolean = False
+
+'[Form1.Hex背]事件 : 文本已经被修改
+Sub Form1_Hex背_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+   If 正在更新 Then Exit Sub ' 检查锁
+   正在更新   = True ' 如果没锁，那么先上锁，再修改
+   RGB背.Text = HEXToRGB(Hex背.Text)
+   正在更新   = False ' 改完了，开锁
+End Sub
+
+'[Form1.RGB背]事件 : 文本已经被修改
+Sub Form1_RGB背_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+   If 正在更新 Then Exit Sub ' 检查锁
+   正在更新   = True ' 如果没锁，那么先上锁，再修改
+   Hex背.Text = RGBToHEX(RGB背.Text)
+   正在更新   = False ' 改完了，开锁
+End Sub
+
+'[Form1.Hex正]事件 : 文本已经被修改
+Sub Form1_Hex正_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+   If 正在更新 Then Exit Sub ' 检查锁
+   正在更新   = True ' 如果没锁，那么先上锁，再修改
+   RGB正.Text = HEXToRGB(Hex正.Text)
+   正在更新   = False ' 改完了，开锁
+
+End Sub
+
+'[Form1.RGB正]事件 : 文本已经被修改
+Sub Form1_RGB正_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+   If 正在更新 Then Exit Sub ' 检查锁
+   正在更新   = True ' 如果没锁，那么先上锁，再修改
+   Hex正.Text = RGBToHEX(RGB正.Text)
+   正在更新   = False ' 改完了，开锁
+
+End Sub
+
+'[Form1.Hex标]事件 : 文本已经被修改
+Sub Form1_Hex标_EN_Change(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
+   If 正在更新 Then Exit Sub ' 检查锁
+   正在更新   = True ' 如果没锁，那么先上锁，再修改
+   RGB标(ControlIndex).Text = HEXToRGB(Hex标(ControlIndex).Text)
+   正在更新   = False ' 改完了，开锁
+
+End Sub
+
+'[Form1.RGB标]事件 : 文本已经被修改
+Sub Form1_RGB标_EN_Change(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
+   If 正在更新 Then Exit Sub ' 检查锁
+   正在更新   = True ' 如果没锁，那么先上锁，再修改
+   Hex标(ControlIndex).Text = RGBToHEX(RGB标(ControlIndex).Text)
+   正在更新   = False ' 改完了，开锁
+
+End Sub
+
+'[Form1.Command1]事件 : 单击
+Sub Form1_Command1_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
+   Dim i As Integer
+   For i = 0 To 4
+      Hex标(i).Text = Hex正.Text
+   Next i
+End Sub
+
+'[Form1.Command3]事件 : 单击
+Sub Form1_Command3_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
+   Dim s As String
+   Dim i As Integer
+   
+   ' 构建输出字符串
+   s = "背景：" + Trim(HEX背.Text) + " " + Trim(RGB背.Text) + vbCrLf
+   s = s        + "正文："         + Trim(HEX正.Text) + " " + Trim(RGB正.Text) + vbCrLf
+   
+   For i = 0 To 4
+      s = s + "标题" + Str(i + 1) + "：" + Trim(HEX标(i).Text) + " " + Trim(RGB标(i).Text) + vbCrLf
+   Next i
+   SetClipBoardText(s)
+End Sub
+
+'[Form1.Command2]事件 : 单击
+Sub Form1_Command2_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
+   Dim i       As Integer
+   Dim s       As String
+   Dim parts() As String
+   Dim rnum    As Byte, gnum As Byte, bnum As Byte
+   ' 设置“背景”标签的背景色和文本色
+   s = RGB背.Text
+   Split(s, ",", parts())
+   rnum           = ValInt(parts(0))
+   gnum           = ValInt(parts(1))
+   bnum           = ValInt(parts(2))
+   背景.backColor = BGR(rnum, gnum, bnum)
+   s = RGB正.Text
+   Split(s, ",", parts())
+   rnum           = ValInt(parts(0)) 
+   gnum           = ValInt(parts(1))
+   bnum           = ValInt(parts(2))
+   背景.ForeColor = BGR(rnum, gnum, bnum)
+   
+   ' 循环处理标题标签数组（假设索引 0 到 4）
+   For i = 0 To 4
+      ' 设置标题标签的文本色
+      s = RGB标(i).Text
+      Split(s, ",", parts())
+      rnum = ValInt(parts(0))
+      gnum = ValInt(parts(1))
+      bnum = ValInt(parts(2))
+      标题(i).ForeColor = BGR(rnum, gnum, bnum)
+      ' 方法一：标题背景色与背景标签相同
+      'SetGadgetColor(标题(i).Handle, Color_BackGround, backColor)
+      
+      ' 方法二（若需透明背景）：取消下一行的注释，并注释掉上面设置背景色的行
+      ' HEXToRGBSetGadgetTransparent(标题(i).Handle, True)   ' 假设 Window9 有此函数
+   Next i
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,317 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.10
+Locked=0
+
+[Form]
+Name=今天
+Help=False
+ClassStyle=CS_DBLCLKS,CS_HREDRAW,CS_VREDRAW
+ClassName=
+WinStyle=WS_CLIPCHILDREN,WS_CLIPSIBLINGS,WS_MAXIMIZEBOX,WS_MINIMIZEBOX,WS_SYSMENU,WS_VISIBLE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_CHILD
+Style=0 - 无边框
+Icon=
+Caption=今天
+StartPosition=2 - 父窗口中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=600
+Height=370
+TopMost=False
+Child=True
+MdiChild=False
+TitleBar=False
+SizeBox=False
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,22
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[YFTreeView]
+Name=YFTreeView_今日列表
+Help=
+Index=-1
+Style=0 - 无边框
+Enabled=True
+Visible=True
+ForeColor=&H000000
+BackColor=&HFFFFFF
+MoveColor=&HFFE5CC
+SelFore=&HFFFFFF
+SelBack=&HE57300
+ScrollFore=&H878787
+ScrollBack=&HE1E1E1
+ScrollMove=&H4B4B4B
+LinesColor=&HA5A5A5
+Font=微软雅黑,12
+ItemHeight=30
+Indent=10
+HasLines=False
+Check=True
+GridLines=True
+FocusLine=False
+NoHScroll=False
+Left=10
+Top=10
+Width=280
+Height=350
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[YFTreeView]
+Name=YFTreeView_副列表
+Help=
+Index=-1
+Style=0 - 无边框
+Enabled=True
+Visible=True
+ForeColor=&H000000
+BackColor=&HFFFFFF
+MoveColor=&HFFE5CC
+SelFore=&HFFFFFF
+SelBack=&HE57300
+ScrollFore=&H878787
+ScrollBack=&HE1E1E1
+ScrollMove=&H4B4B4B
+LinesColor=&HA5A5A5
+Font=微软雅黑,12
+ItemHeight=30
+Indent=10
+HasLines=False
+Check=True
+GridLines=False
+FocusLine=False
+NoHScroll=False
+Left=300
+Top=10
+Width=280
+Height=350
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+
+[AllCode]
+'这是标准的工程模版，你也可做自己的模版。
+'写好工程，复制全部文件到VFB软件文件夹里【template】里即可，子文件夹名为 VFB新建工程里显示的名称
+'快去打造属于你自己的工程模版吧。
+
+Sub RefreshTodayForm()
+    Dim i As Long
+    Dim j As Long
+    Dim taskIdx As Long
+    Dim hasSub As Long
+    Dim subCount As Long
+    
+    Dim rootPeriodic As YFTreeViewData Ptr
+    Dim rootRegular As YFTreeViewData Ptr
+    Dim rootDeferred As YFTreeViewData Ptr
+    Dim taskNode As YFTreeViewData Ptr
+    Dim subNode As YFTreeViewData Ptr
+    Dim dataValue As Long
+    
+    ' 清空两个树形视图
+    YFTreeView_今日列表.DeleteAllItems
+    YFTreeView_副列表.DeleteAllItems
+    
+    ' ========== 今日列表：周期任务 ==========
+    If UBound(periodicOnList) >= 0 Then
+        For i = 0 To UBound(periodicOnList)
+            taskIdx = periodicOnList(i)
+            If taskIdx >= 0 And taskIdx <= UBound(periodicTasks) Then
+                With periodicTasks(taskIdx)
+                    ' 主任务：高16位=1(周期)，低16位=taskIdx
+                    dataValue = (1 Shl 16) Or taskIdx
+                    taskNode = YFTreeView_今日列表.AddItem(0, .Name, dataValue, 0, 0, 0, -1, -1, .tempStatus)
+                    
+                    hasSub = Val(.subtasks(0, 0))
+                    If hasSub = 1 Then
+                        subCount = Val(.subtasks(0, 1))
+                        For j = 1 To subCount
+                            ' 子任务：高16位=4，低16位=j（子任务索引）
+                            dataValue = (4 Shl 16) Or j
+                            subNode = YFTreeView_今日列表.AddItem(taskNode, .subtasks(j, 0), dataValue, 0, 0, 0, -1, -1, Val(.subtasks(j, 1)))
+                        Next
+                    End If
+                End With
+            End If
+        Next
+    End If
+    
+    ' ========== 副列表 ==========
+    ' ----- 普通任务标题 -----
+    rootRegular = YFTreeView_副列表.AddItem(0, "=====普通任务=====", -1, 0, 0, 0, -1, -1, 0)
+    ' 添加普通任务
+    If UBound(regularOnList) >= 0 Then
+        For i = 0 To UBound(regularOnList)
+            taskIdx = regularOnList(i)
+            If taskIdx >= 0 And taskIdx <= UBound(regularTasks) Then
+                With regularTasks(taskIdx)
+                    dataValue = (2 Shl 16) Or taskIdx
+                    taskNode = YFTreeView_副列表.AddItem(rootRegular, .name, dataValue, 0, 0, 0, -1, -1, .tempStatus)
+                    
+                    hasSub = Val(.subtasks(0, 0))
+                    If hasSub = 1 Then
+                        subCount = Val(.subtasks(0, 1))
+                        For j = 1 To subCount
+                            dataValue = (4 Shl 16) Or j
+                            subNode = YFTreeView_副列表.AddItem(taskNode, .subtasks(j, 0), dataValue, 0, 0, 0, -1, -1, Val(.subtasks(j, 1)))
+                        Next
+                    End If
+                End With
+            End If
+        Next
+    End If
+    
+    ' ----- 延期任务标题 -----
+    rootDeferred = YFTreeView_副列表.AddItem(0, "=====延期任务=====", -1, 0, 0, 0, -1, -1, 0)
+    ' 添加所有延期任务
+    If UBound(deferredTasks) >= 0 Then
+        For i = 0 To UBound(deferredTasks)
+            With deferredTasks(i)
+                dataValue = (3 Shl 16) Or i
+                taskNode = YFTreeView_副列表.AddItem(rootDeferred, .name, dataValue, 0, 0, 0, -1, -1, .tempStatus)
+                
+                hasSub = Val(.subtasks(0, 0))
+                If hasSub = 1 Then
+                    subCount = Val(.subtasks(0, 1))
+                    For j = 1 To subCount
+                        dataValue = (4 Shl 16) Or j
+                        subNode = YFTreeView_副列表.AddItem(taskNode, .subtasks(j, 0), dataValue, 0, 0, 0, -1, -1, Val(.subtasks(j, 1)))
+                    Next
+                End If
+            End With
+        Next
+    End If
+     YFTreeView_今日列表.ExpandAllItems
+     YFTreeView_副列表.ExpandAllItems
+End Sub
+
+' 复选框处理函数
+Sub HandleTreeViewCheckBox(pData As YFTreeViewData Ptr, Checked As Long)
+    Dim dataValue As Long = pData.DataValue
+    Dim taskType As Integer
+    Dim taskIdx As Long
+    Dim subIdx As Long
+    
+    If dataValue = -1 Then Exit Sub   ' 标题行
+    
+    ' 判断是否为子任务（高16位=4）
+    If (dataValue Shr 16) = 4 Then
+        subIdx = dataValue And &HFFFF   ' 子任务索引
+        Dim parentNode As YFTreeViewData Ptr = pData.Parent   ' 假设节点有Parent成员
+        If parentNode = 0 Then Exit Sub
+        Dim parentData As Long = parentNode.DataValue
+        If parentData = -1 Then Exit Sub
+        
+        taskType = (parentData Shr 16) And &HFFFF
+        taskIdx = parentData And &HFFFF
+        
+        ' 更新对应任务数组中的子任务状态
+        If taskType = 1 Then   ' 周期任务
+            If taskIdx >= 0 And taskIdx <= UBound(periodicTasks) Then
+                With periodicTasks(taskIdx)
+                    If subIdx >= 1 And subIdx <= Val(.subtasks(0, 1)) Then
+                        .subtasks(subIdx, 1) = IIf(Checked, "1", "0")
+                    End If
+                End With
+            End If
+        ElseIf taskType = 2 Then   ' 普通任务
+            If taskIdx >= 0 And taskIdx <= UBound(regularTasks) Then
+                With regularTasks(taskIdx)
+                    If subIdx >= 1 And subIdx <= Val(.subtasks(0, 1)) Then
+                        .subtasks(subIdx, 1) = IIf(Checked, "1", "0")
+                    End If
+                End With
+            End If
+        ElseIf taskType = 3 Then   ' 延期任务
+            If taskIdx >= 0 And taskIdx <= UBound(deferredTasks) Then
+                With deferredTasks(taskIdx)
+                    If subIdx >= 1 And subIdx <= Val(.subtasks(0, 1)) Then
+                        .subtasks(subIdx, 1) = IIf(Checked, "1", "0")
+                    End If
+                End With
+            End If
+        End If
+    Else   ' 主任务节点
+        taskType = (dataValue Shr 16) And &HFFFF
+        taskIdx = dataValue And &HFFFF
+        
+        If taskType = 1 Then
+            If taskIdx >= 0 And taskIdx <= UBound(periodicTasks) Then
+                periodicTasks(taskIdx).tempStatus = Checked
+            End If
+        ElseIf taskType = 2 Then
+            If taskIdx >= 0 And taskIdx <= UBound(regularTasks) Then
+                regularTasks(taskIdx).tempStatus = Checked
+            End If
+        ElseIf taskType = 3 Then
+            If taskIdx >= 0 And taskIdx <= UBound(deferredTasks) Then
+                deferredTasks(taskIdx).tempStatus = Checked
+            End If
+        End If
+    End If
+End Sub
+
+
+'[今天]事件 : 窗口完全显示后。
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
+Sub 今天_Shown(hWndForm As hWnd,UserData As Integer)
+RefreshTodayForm()
+End Sub
+
+'[今天.YFTreeView_今日列表]事件 : 列表项目复选框值被改变
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+'Item        被修改的项目指针（可以修改成员，修改后需要刷新控件显示，特殊成员由控件处理，只可读，千万别修改）
+'newCheck    新的状态 True False
+Sub 今天_YFTreeView_今日列表_CheckBox(hWndForm As hWnd, hWndControl As hWnd, hItem As YFTreeViewData Ptr, newCheck As Long)
+   HandleTreeViewCheckBox(hItem, Checked)
+End Sub
+
+'[今天.YFTreeView_副列表]事件 : 列表项目复选框值被改变
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+'Item        被修改的项目指针（可以修改成员，修改后需要刷新控件显示，特殊成员由控件处理，只可读，千万别修改）
+'newCheck    新的状态 True False
+Sub 今天_YFTreeView_副列表_CheckBox(hWndForm As hWnd, hWndControl As hWnd, hItem As YFTreeViewData Ptr, newCheck As Long)
+   HandleTreeViewCheckBox(hItem, Checked)
+End Sub
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,277 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.10
+Locked=0
+
+[Form]
+Name=计时窗口
+Help=False
+ClassStyle=CS_DBLCLKS,CS_HREDRAW,CS_VREDRAW
+ClassName=
+WinStyle=WS_VISIBLE,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_EX_TOPMOST,WS_EX_TOOLWINDOW,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_POPUP
+Style=0 - 无边框
+Icon=
+Caption=Form1
+StartPosition=0 - 手动
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=216
+Height=68
+TopMost=True
+Child=False
+MdiChild=False
+TitleBar=False
+SizeBox=False
+SysMenu=False
+MaximizeBox=False
+MinimizeBox=False
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=RGB(0,0,255)
+Shadow=0 - 无阴影
+BackColor=RGB(0,0,255)
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Label]
+Name=倒计时显示
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=00:20:00
+Enabled=True
+Visible=True
+ForeColor=RGB(0,255,0)
+BackColor=SYS,25
+Font=霞鹜文楷 GB 屏幕阅读版 R,36,1
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=0
+Top=10
+Width=210
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[TrayIco]
+Name=TrayIco1
+Help=
+Icon=20.ico
+CallMsg=400
+Tips=
+Left=260
+Top=30
+Tag=
+
+[PopupMenu]
+Name=右键菜单
+Help=
+Index=-1
+Menu=不可见计时窗口_右键菜单_不可见0-10透明度70%计时窗口_右键菜单_透明度700-10透明度50%计时窗口_右键菜单_透明度500-10透明度30%计时窗口_右键菜单_透明度300-10设为不透明计时窗口_右键菜单_设为不透明0-10-计时窗口_右键菜单_分割线0-10关闭计时窗口_右键菜单_关闭0-10
+Left=390
+Top=30
+Tag=
+
+[Timer]
+Name=倒计时时钟
+Help=
+Index=-1
+Interval=1000
+Enabled=False
+Left=260
+Top=110
+Tag=
+
+[Timer]
+Name=正计时时钟
+Help=
+Index=-1
+Interval=1000
+Enabled=False
+Left=340
+Top=120
+Tag=
+
+
+[AllCode]
+DimP starttime As Double
+DimP F2Close As Boolean
+DimP 间隔时间 As Integer = 20*60 '秒
+
+
+'[计时窗口.TrayIco1]事件 : 按下鼠标右键
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+''         本控件为功能控件，就是无窗口，无显示，只有功能。如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 
+'uID       ID 
+'xPos yPos   当前鼠标位置
+Sub 计时窗口_TrayIco1_WM_RButtonDown(hWndForm As hWnd, uID As Long, xPos As Long, yPos As Long)
+   PopupMenu(hWndForm, Me.右键菜单.HMENU)  
+End Sub
+
+
+'[计时窗口]事件 : 窗口完全显示后。
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
+Sub 计时窗口_Shown(hWndForm As hWnd, UserData As Integer)
+   ' 获取屏幕的宽度和高度
+   Dim ScreenWidth  As Long
+   Dim ScreenHeight As Long
+   ScreenWidth  = GetSystemMetrics(0) ' SM_CXSCREEN = 0
+   ScreenHeight = GetSystemMetrics(1) ' SM_CYSCREEN = 1
+   
+   ' 获取当前窗口的宽度和高度
+   Dim WindowWidth  As Long
+   Dim WindowHeight As Long
+   WindowWidth  = Me.Width ' Me 代表当前窗体
+   WindowHeight = Me.Height
+   
+   ' 计算窗口左上角的新位置，使其居中
+   Dim NewLeft As Long
+   Dim NewTop  As Long
+   NewLeft = (ScreenWidth - WindowWidth) / 2
+   ' 屏幕最上方
+   NewTop = 0
+   
+   ' 移动窗口到计算出的新位置
+   ' 参数：窗口句柄，新X坐标，新Y坐标，宽度，高度，是否重绘
+   MoveWindow Me.hWnd, NewLeft, NewTop, WindowWidth, WindowHeight, True
+   
+   计时窗口.MousePass = True  
+   倒计时开始()
+End Sub
+
+'[计时窗口.倒计时时钟]事件 : 定时器
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+''         本控件为功能控件，就是无窗口，无显示，只有功能。如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 
+'wTimerID  定时器ID，区分不同定时器的编号
+Sub 计时窗口_倒计时时钟_WM_Timer(hWndForm As hWnd, wTimerID As Long)
+   Dim 消耗时间 As Double ' 单位秒
+   Dim 显示时间 As Double ' 单位毫秒
+   
+   消耗时间 = Timer - starttime
+   ' 跨夜补偿
+   If 消耗时间 < 0 Then 消耗时间 = 消耗时间 + 86400
+   
+   显示时间 = (间隔时间 - 消耗时间) * 1000 
+   更新显示(显示时间)
+   ' 倒计时正常结束
+   If 显示时间 <= 0 Then
+      显示时间 = 0
+      
+      Form2.Show() 
+      更新显示(显示时间)
+      正计时开始()
+   End If
+End Sub
+
+Sub 更新显示(i As Double) ' 毫秒
+   Dim 时 As Integer, 分钟 As Integer, 秒 As Integer
+   If i <= 0 Then
+      时   = 0
+      分钟 = 0
+      秒   = 0
+   Else
+      时   = Int(i / 3600000)
+      分钟 = Int((i Mod 3600000) / 60000)
+      秒   = Int((i Mod 60000) / 1000)
+   End If
+   倒计时显示.Caption = Format(时, "00") & ":" & Format(分钟, "00") & ":" & Format(秒, "00")
+End Sub
+
+
+Sub 倒计时开始()
+   正计时时钟.Enabled = False
+   F2Close = False
+   ' 文字设定为绿色
+   倒计时显示.ForeColor = BGR(0, 255, 0)
+   starttime          = Timer
+   倒计时时钟.Enabled = True
+End Sub
+
+Sub 正计时开始()
+   倒计时时钟.Enabled=False
+   ' 文字设定为红色
+   倒计时显示.ForeColor = BGR(255, 0, 0)
+   starttime = Timer
+   正计时时钟.Enabled   =True
+End Sub
+
+
+'[计时窗口.正计时时钟]事件 : 定时器
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+''         本控件为功能控件，就是无窗口，无显示，只有功能。如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 
+'wTimerID  定时器ID，区分不同定时器的编号
+Sub 计时窗口_正计时时钟_WM_Timer(hWndForm As hWnd, wTimerID As Long)
+   Dim 增加时间 As Double ' 单位秒
+ 
+   增加时间 = Timer - starttime
+   ' 跨夜补偿
+   If 增加时间 < 0 Then 增加时间 = 增加时间 + 86400
+   
+   增加时间 = 增加时间 * 1000 
+   更新显示(增加时间)
+   
+   ' 正计时结束条件是第二窗口关闭
+   If F2Close Then
+      倒计时开始()
+   End If
+   
+   
+End Sub
+
+'[计时窗口.右键菜单]事件 : 点击了菜单项
+'hWndForm 当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+''           本控件为功能控件，就是无窗口，无显示，只有功能。如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 
+'wID      菜单项命令ID
+Sub 计时窗口_右键菜单_WM_Command(hWndForm As hWnd, wID As ULong)
+   
+   Select Case wID
+      Case 计时窗口_右键菜单_不可见
+         计时窗口.TransPer = 100
+      Case 计时窗口_右键菜单_透明度70 ' 透明度70%
+         计时窗口.TransPer = 70
+      Case 计时窗口_右键菜单_透明度50 ' 透明度50%
+         计时窗口.TransPer = 50
+      Case 计时窗口_右键菜单_透明度30 ' 透明度30%
+         计时窗口.TransPer = 30
+      Case 计时窗口_右键菜单_设为不透明 ' 设为不透明
+         计时窗口.TransPer = 0
+      Case 计时窗口_右键菜单_关闭 ' 关闭
+         End
+   End Select
+   
+End Sub
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

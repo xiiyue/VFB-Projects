@@ -1,0 +1,49 @@
+﻿' 周期类型枚举
+Enum Period
+    PERIOD_NONE = 0
+    PERIOD_DAILY
+    PERIOD_WEEKLY
+    PERIOD_MONTHLY
+    PERIOD_YEARLY
+End Enum
+
+' 周期任务
+Type PeriodicTask
+    name As String
+    createTime As Double
+    PeriodType As Period
+    currentPeriod As Double
+    nextPeriod As Double
+    completed As Boolean
+    completionCount As Long
+    onList As Boolean
+    tempStatus As Boolean               
+    subtasks As String                 
+End Type
+
+' 延期任务
+Type DeferredTask
+    name As String
+    createTime As Double
+    target As Double
+    onList As Boolean
+    tempStatus As Boolean            
+    subtasks As String                 
+End Type
+
+' 普通任务
+Type RegularTask
+    name As String
+    createTime As Double
+    taskTime As Double
+    onList As Boolean
+    tempStatus As Boolean               
+    subtasks As String               
+ End Type
+ 
+ ' 子任务项类型
+Type SubTaskItem
+    name As String
+    completed As Boolean
+ End Type
+ 

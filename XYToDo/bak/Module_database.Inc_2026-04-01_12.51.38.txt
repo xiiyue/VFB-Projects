@@ -1,0 +1,461 @@
+﻿' 思路是加载文件，内存运作，保存文件。
+' 本模块是与JSON文件交互。
+
+' 定义任务数组
+DimP periodicTasks() As PeriodicTask
+DimP deferredTasks() As DeferredTask
+DimP regularTasks() As RegularTask
+
+DimP lastOpenTime As Double
+DimP periodicOnList() As Long   ' 周期任务上榜索引数组
+DimP regularOnList() As Long    ' 普通任务上榜索引数组
+
+
+' ========== 周期任务 ==========
+' 加载周期任务
+Sub LoadPeriodicTasks()
+   Dim i            As Long
+   Dim taskName     As String
+   Dim subtaskStr   As String
+   Dim periodicFile As String
+   periodicFile = App.Path & "data\periodic_tasks.json"
+   
+   ' 检查文件是否存在
+   If Not FileExists(periodicFile) Then
+      ReDim periodicTasks(0)
+      Exit Sub
+   End If
+   ' 绑定文件并加载 JSON 数据
+   Dim js As JSON = periodicFile
+   
+   ' 遍历数组元素
+   i = 0
+   Do
+      taskName = js.ValueStr("#" & i & "\Name")
+      If taskName = "" Then
+         Exit Do
+      End If
+      
+      ' 扩展数组
+      ReDim Preserve periodicTasks(i)
+      
+      With periodicTasks(i)
+         .id = CLng(js.ValueDouble("#" & i & "\id"))
+         .Name            = taskName
+         .createTime      = js.ValueDouble("#" & i & "\createTime")
+         .PeriodType      = CInt(js.ValueDouble("#" & i & "\PeriodType"))
+         .currentPeriod   = js.ValueDouble("#" & i & "\currentPeriod")
+         .nextPeriod      = js.ValueDouble("#" & i & "\nextPeriod")
+         .completed       = (js.ValueDouble("#" & i & "\completed") <> 0) ' 数字 0/1 转 Boolean
+         .completionCount = CLng(js.ValueDouble("#" & i & "\completionCount"))
+         .onList          = (js.ValueDouble("#" & i & "\onList") <> 0)
+         .tempStatus      = (js.ValueDouble("#" & i & "\tempStatus") <> 0)
+         ' 子任务
+         subtaskStr = js.ValueStr("#" & i & "\subtasks")
+         LoadSubTasks(subtaskStr, .subtasks())
+      End With
+      i = i + 1
+   Loop
+End Sub
+
+' 保存周期任务
+Sub SavePeriodicTasks()
+   Dim periodicFile As String
+   periodicFile = App.Path & "data\periodic_tasks.json"
+   Dim js         As JSON
+   Dim i          As Long
+   Dim taskCount  As Long
+   Dim subtaskStr As String
+   
+   taskCount = UBound(periodicTasks) + 1 ' 数组元素个数
+   ' 创建新的 JSON 数组
+   js.JsonData = "[]"
+   
+   ' 如果没有任务，保存空数组
+   If taskCount = 0 Then
+      js.SaveFile(periodicFile, 1)
+      Exit Sub
+   End If
+   
+   ' 为每个任务填充数据
+   For i = 0 To taskCount - 1
+      With periodicTasks(i)
+         js.ValueDouble("#" & i & "\id") = .id
+         js.ValueStr("#" & i & "\Name")               = .Name
+         js.ValueDouble("#" & i & "\createTime")      = .createTime
+         js.ValueDouble("#" & i & "\PeriodType")      = .PeriodType
+         js.ValueDouble("#" & i & "\currentPeriod")   = .currentPeriod
+         js.ValueDouble("#" & i & "\nextPeriod")      = .nextPeriod
+         js.ValueDouble("#" & i & "\completed")       = IIf(.completed, 1, 0)
+         js.ValueDouble("#" & i & "\completionCount") = .completionCount
+         js.ValueDouble("#" & i & "\onList")          = IIf(.onList, 1, 0)
+         js.ValueDouble("#" & i & "\tempStatus")      = IIf(.tempStatus, 1, 0)
+         ' 子任务
+         subtaskStr = SaveSubTasks(.subtasks())
+         js.ValueStr("#" & i & "\subtasks") = subtaskStr
+      End With
+   Next
+   ' 保存到文件
+   js.SaveFile(periodicFile, 1)
+End Sub
+
+
+' ========== 延期任务 ==========
+
+' 加载延期任务
+Sub LoadDeferredTasks()
+   Dim deferredFile As String
+   deferredFile = App.Path & "data\deferred_tasks.json"
+   Dim i          As Long
+   Dim taskName   As String
+   Dim subtaskStr As String
+   
+   
+   ' 检查文件是否存在
+   If Not FileExists(deferredFile) Then
+      ReDim deferredTasks(0)
+      Exit Sub
+   End If
+   
+   ' 绑定文件并加载 JSON 数据
+   Dim js As JSON = deferredFile
+   
+   ' 遍历数组元素
+   i = 0
+   Do
+      taskName = js.ValueStr("#" & i & "\Name")
+      If taskName = "" Then Exit Do
+      
+      ' 扩展数组
+      ReDim Preserve deferredTasks(i)
+      
+      With deferredTasks(i)
+         .name       = taskName
+         .createTime = js.ValueDouble("#" & i & "\createTime")
+         .target = CLng(js.ValueDouble("#" & i & "\target"))
+         .onList     = (js.ValueDouble("#" & i & "\onList") <> 0)
+         .tempStatus = (js.ValueDouble("#" & i & "\tempStatus") <> 0)
+         ' 子任务
+         subtaskStr = js.ValueStr("#" & i & "\subtasks")
+         LoadSubTasks(subtaskStr, .subtasks())
+      End With
+      
+      i = i + 1
+   Loop
+End Sub
+
+' 保存延期任务
+Sub SaveDeferredTasks()
+   Dim deferredFile As String
+   deferredFile = App.Path & "data\deferred_tasks.json"
+   Dim js         As JSON
+   Dim i          As Long
+   Dim taskCount  As Long
+   Dim subtaskStr As String
+   
+   taskCount = UBound(deferredTasks) + 1
+   
+   ' 创建空的 JSON 数组
+   js.JsonData = "[]"
+   
+   ' 如果没有任务，直接保存空数组
+   If taskCount = 0 Then
+      js.SaveFile(deferredFile, 1)
+      Exit Sub
+   End If
+   
+   ' 填充数据
+   For i = 0 To taskCount - 1
+      With deferredTasks(i)
+         js.ValueStr("#" & i & "\Name")          = .name
+         js.ValueDouble("#" & i & "\createTime") = .createTime
+         js.ValueDouble("#" & i & "\target")     = .target
+         js.ValueDouble("#" & i & "\onList")     = IIf(.onList, 1, 0)
+         js.ValueDouble("#" & i & "\tempStatus") = IIf(.tempStatus, 1, 0)
+         ' 子任务
+         subtaskStr = SaveSubTasks(.subtasks())
+         js.ValueStr("#" & i & "\subtasks") = subtaskStr
+      End With
+   Next
+   
+   ' 保存文件
+   js.SaveFile(deferredFile, 1)
+End Sub
+
+' ========== 普通任务 ==========
+
+' 加载普通任务
+Sub LoadRegularTasks()
+   Dim regularFile As String
+   regularFile = App.Path & "data\regular_tasks.json"
+   Dim i          As Long
+   Dim taskName   As String
+   Dim subtaskStr As String
+   
+   ' 检查文件是否存在
+   If Not FileExists(regularFile) Then
+      ReDim regularTasks(0)
+      Exit Sub
+   End If
+   
+   ' 绑定文件并加载 JSON 数据
+   Dim js As JSON = regularFile
+   
+   ' 遍历数组元素
+   i = 0
+   Do
+      taskName = js.ValueStr("#" & i & "\Name")
+      If taskName = "" Then Exit Do
+      
+      ' 扩展数组
+      ReDim Preserve regularTasks(i)
+      
+      With regularTasks(i)
+         .name       = taskName
+         .createTime = js.ValueDouble("#" & i & "\createTime")
+         .taskTime   = js.ValueDouble("#" & i & "\taskTime")
+         .onList     = (js.ValueDouble("#" & i & "\onList") <> 0)
+         .tempStatus = (js.ValueDouble("#" & i & "\tempStatus") <> 0)
+         ' 子任务
+         subtaskStr = js.ValueStr("#" & i & "\subtasks")
+         LoadSubTasks(subtaskStr, .subtasks())
+      End With
+      
+      i = i + 1
+   Loop
+End Sub
+
+' 保存普通任务
+Sub SaveRegularTasks()
+   Dim regularFile As String
+   regularFile = App.Path & "data\regular_tasks.json"
+   Dim js         As JSON
+   Dim i          As Long
+   Dim taskCount  As Long
+   Dim subtaskStr As String
+   
+   taskCount = UBound(regularTasks) + 1
+   
+   ' 创建空的 JSON 数组
+   js.JsonData = "[]"
+   
+   ' 如果没有任务，直接保存空数组
+   If taskCount = 0 Then
+      js.SaveFile(regularFile, 1)
+      Exit Sub
+   End If
+   
+   ' 填充数据
+   For i = 0 To taskCount - 1
+      With regularTasks(i)
+         js.ValueStr("#" & i & "\Name")          = .name
+         js.ValueDouble("#" & i & "\createTime") = .createTime
+         js.ValueDouble("#" & i & "\taskTime")   = .taskTime
+         js.ValueDouble("#" & i & "\onList")     = IIf(.onList, 1, 0)
+         js.ValueDouble("#" & i & "\tempStatus") = IIf(.tempStatus, 1, 0)
+         ' 子任务
+         subtaskStr = SaveSubTasks(.subtasks())
+         js.ValueStr("#" & i & "\subtasks") = subtaskStr
+      End With
+   Next
+   
+   ' 保存文件
+   js.SaveFile(regularFile, 1)
+End Sub
+
+' ========== 子任务 ==========
+' 加载子任务，字符串解压给数组
+Sub LoadSubTasks(s As String, n() As String)
+   Dim parts() As String
+   Dim count As Long
+   Dim j As Long
+   If s = "" Then
+      ' 无子任务：设置元信息
+      ReDim n(0, 1)
+      n(0, 0) = "0" ' 无子任务标记
+      n(0, 1) = "0" ' 子任务数量
+   Else
+      ' 按 "|" 分割
+      vbSplit(s, "|", parts())
+      count = UBound(parts) + 1
+      ' 重新分配动态数组：行数 = count + 1（索引0为元信息），列数=2
+      ReDim n(count, 1)
+      n(0, 0) = "1"           ' 有子任务标记
+      n(0, 1) = Str(count) ' 子任务数量
+      
+      Dim subParts(1) As String
+      For j = 0 To count - 1
+         vbSplit(parts(j), ":", subParts())
+         n(j + 1, 0) = subParts(0) ' 任务名
+         n(j + 1, 1) = subParts(1) ' 状态 "0" 或 "1"
+      Next
+   End If
+End Sub
+
+' 保存子任务，数组打包字符串
+Function SaveSubTasks(n() As String) As String
+   Dim s As String
+   Dim count As Long
+   Dim j As Long
+   s = ""
+   ' 检查是否有子任务标记
+   If UBound(n, 1) >= 0 Then
+      ' 获取子任务数量（存储在 (0,1)）
+      count = Val(n(0, 1))
+      If count > 0 Then
+         For j = 1 To count
+            If j > 1 Then s = s & "|"
+            s = s & n(j, 0) & ":" & n(j, 1)
+         Next
+      End If
+   End If
+   Return s
+End Function
+
+' ========== 归档 ==========
+' taskType: 1=周期任务, 2=普通任务
+' taskIndex: 对应数组中的索引
+Sub ArchiveTask(taskType As Integer, taskIndex As Integer)
+    Dim jsArchived As JSON
+    Dim archivedFile As String 
+    archivedFile = App.Path & "data\archived_tasks.json"
+    Dim count As Long
+    Dim i As Long
+
+    ' 加载现有归档文件，若不存在则初始化空结构
+    If FileExists(archivedFile) Then
+        jsArchived.FileName = archivedFile
+    Else
+        ' 创建空的归档结构
+        jsArchived.JsonData = "{""periodic"":[], ""regular"":[]}"
+    End If
+
+    If taskType = 1 Then   ' 周期任务
+        ' 获取当前 periodic 数组元素个数
+        count = 0
+        Do
+            Dim checkName As String = jsArchived.ValueStr("periodic\#" & count & "\Name")
+            If checkName = "" Then Exit Do
+            count = count + 1
+        Loop
+
+        ' 将周期任务数据添加到数组末尾
+        With periodicTasks(taskIndex)
+            jsArchived.ValueStr("periodic\#" & count & "\Name") = .Name
+            jsArchived.ValueDouble("periodic\#" & count & "\periodType") = .PeriodType
+            jsArchived.ValueDouble("periodic\#" & count & "\createTime") = .createTime
+            jsArchived.ValueDouble("periodic\#" & count & "\completionCount") = .completionCount
+        End With
+
+    ElseIf taskType = 2 Then   ' 普通任务
+        ' 获取当前 regular 数组元素个数
+        count = 0
+        Do
+            Dim checkNameReg As String = jsArchived.ValueStr("regular\#" & count & "\Name")
+            If checkNameReg = "" Then Exit Do
+            count = count + 1
+        Loop
+
+        ' 将普通任务数据添加到数组末尾
+        With regularTasks(taskIndex)
+            jsArchived.ValueStr("regular\#" & count & "\Name") = .name
+            jsArchived.ValueDouble("regular\#" & count & "\taskTime") = .taskTime
+            jsArchived.ValueDouble("regular\#" & count & "\createTime") = .createTime
+        End With
+    End If
+
+    ' 保存归档文件
+    jsArchived.SaveFile(archivedFile, 1)
+
+    ' 从原数组中删除任务
+    DeleteTask(taskType, taskIndex)
+    RefreshFullTaskList()
+End Sub
+
+
+' ========== 状态文件 ==========
+' 加载状态
+Sub LoadAppState()
+    Dim js As JSON
+    Dim indicesStr As String
+    Dim parts() As String
+    Dim i As Long
+    Dim stateFile As String 
+    stateFile = App.Path & "data\state.json"
+
+    ' 检查文件是否存在
+    If Not FileExists(stateFile) Then
+        ' 文件不存在，使用默认值
+        lastOpenTime = Now()
+        ReDim periodicOnList(0)
+        ReDim regularOnList(0)
+        SaveAppState()   ' 创建文件
+        Exit Sub
+    End If
+
+    ' 加载文件
+    js.FileName = stateFile
+
+    ' 读取上次打开时间
+    lastOpenTime = js.ValueDouble("lastOpenTime")
+    If lastOpenTime = 0 Then lastOpenTime = Now()   ' 如果缺失，使用当前时间
+
+    ' 读取周期任务上榜索引（逗号分隔字符串）
+    indicesStr = js.ValueStr("periodicOnList")
+    If indicesStr <> "" Then
+        vbSplit(indicesStr, ",",parts())
+        ReDim periodicOnList(UBound(parts))
+        For i = 0 To UBound(parts)
+            periodicOnList(i) = Val(parts(i))
+        Next
+    Else
+        ReDim periodicOnList(0)
+    End If
+
+    ' 读取普通任务上榜索引
+    indicesStr = js.ValueStr("regularOnListIndices")
+    If indicesStr <> "" Then
+        vbSplit(indicesStr, ",",parts())
+        ReDim regularOnListIndices(UBound(parts))
+        For i = 0 To UBound(parts)
+            regularOnListIndices(i) = Val(parts(i))
+        Next
+    Else
+        ReDim regularOnListIndices(0)
+    End If
+End Sub
+
+
+' 保存应用状态
+Sub SaveAppState()
+    Dim js As JSON
+    Dim indicesStr As String
+    Dim i As Long
+    Dim stateFile As String 
+    stateFile = App.Path & "data\state.json"
+
+    ' 创建空的 JSON 对象
+    js.JsonData = "{}"
+
+    ' 保存上次打开时间
+    js.ValueDouble("lastOpenTime") = lastOpenTime
+
+    ' 保存周期任务上榜索引（转为逗号分隔字符串）
+    indicesStr = ""
+    For i = 0 To UBound(periodicOnList)
+        If i > 0 Then indicesStr = indicesStr & ","
+        indicesStr = indicesStr & Str(periodicOnList(i))
+    Next
+    js.ValueStr("periodicOnList") = indicesStr
+
+    ' 保存普通任务上榜索引
+    indicesStr = ""
+    For i = 0 To UBound(regularOnListIndices)
+        If i > 0 Then indicesStr = indicesStr & ","
+        indicesStr = indicesStr & Str(regularOnListIndices(i))
+    Next
+    js.ValueStr("regularOnListIndices") = indicesStr
+
+    ' 保存到文件
+    js.SaveFile(stateFile, 1)
+End Sub

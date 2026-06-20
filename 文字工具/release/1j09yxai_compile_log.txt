@@ -1,0 +1,11 @@
+﻿FreeBASIC Compiler - Version 1.10.1 (2023-12-24), built for win32 (32bit)
+Copyright (C) 2004-2023 The FreeBASIC development team.
+开始编译时间:2026-03-21 20:16:03 , 解析代码:0.3秒 , 编译代码:1.2秒 , 总用时间:1.5秒
+目标：win32, 686, 32bit
+后端：gas
+编译：CODEGEN_1j09yxai_MAIN.bas -o CODEGEN_1j09yxai_MAIN.asm (主模块)
+CODEGEN_1j09yxai_Form1_FORM.inc(499) warning 3(2): 传递不同的指针类型，是参数 1 (processFunc) of PROCESSSELECTEDTEXTWITHINT()
+CODEGEN_1j09yxai_Form1_FORM.inc(507) warning 3(2): 传递不同的指针类型，是参数 1 (processFunc) of PROCESSSELECTEDTEXT()
+组件：D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\bin\win32\as.exe --32 --strip-local-absolute "CODEGEN_1j09yxai_MAIN.asm" -o "CODEGEN_1j09yxai_MAIN.o"
+资源：D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\bin\win32\GoRC.exe /ni /nw /o /fo "1j09yxai_RESOURCE.obj" "1j09yxai_RESOURCE.rc"
+链接：D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\bin\win32\ld.exe -m i386pe -o "文字工具.exe" -subsystem windows -T "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\fbextra.x" --stack 1048576,1048576 -s -L "D:\XYDrive\IDE\VFB\Compile\expand\lib\win32" -L "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32" -L "." "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\crt2.o" "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\crtbegin.o" "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\fbrt0.o" "CODEGEN_1j09yxai_MAIN.o" "1j09yxai_RESOURCE.obj" "-(" -lddraw -ldxguid -lkernel32 -lgdi32 -lmsimg32 -luser32 -lversion -ladvapi32 -limm32 -luuid -lole32 -loleaut32 -lgdiplus -lcomctl32 -lpsapi -lshell32 -lcomdlg32 -lshlwapi -luxtheme -lfb -lgcc -lmsvcrt -lmingw32 -lmingwex -lmoldname -lgcc_eh "-)" "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\crtend.o" 

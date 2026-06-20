@@ -1,0 +1,420 @@
+﻿' 本模块是操作任务数组以及自定义功能
+#include Once "Afx/AfxTime.inc"
+DimP nextTaskId As Long
+
+Sub LoadTasks()
+   LoadDeferredTasks()
+   LoadPeriodicTasks()
+   LoadRegularTasks()
+   InitTaskIdGenerator()
+End Sub
+
+Sub SaveTask()
+   SaveDeferredTasks()
+   SavePeriodicTasks()
+   SaveRegularTasks()
+End Sub
+
+' ==========================================
+' 计算下期执行时间
+' ==========================================
+Function CalculateNextPeriod(currentPeriod As Double, periodType As Integer) As Double
+    Dim sysTime As SYSTEMTIME
+    sysTime = AfxVariantTimeToSystemTime(currentPeriod)
+    
+    Dim newYear As Integer = sysTime.wYear
+    Dim newMonth As Integer = sysTime.wMonth
+    Dim newDay As Integer = sysTime.wDay
+    Dim newHour As Integer = sysTime.wHour
+    Dim newMinute As Integer = sysTime.wMinute
+    Dim newSecond As Integer = sysTime.wSecond
+    
+    Select Case periodType
+        Case 1 ' 日任务
+            newDay = newDay + 1
+            AdjustDate(newYear, newMonth, newDay)
+            
+        Case 2 ' 周任务
+            newDay = newDay + 7
+            AdjustDate(newYear, newMonth, newDay)
+            
+        Case 3 ' 月任务
+            newMonth = newMonth + 1
+            If newMonth > 12 Then
+                newMonth = 1
+                newYear = newYear + 1
+            End If
+            ' 如果原日期大于新月份的天数，则取新月份最后一天
+            Dim daysInNewMonth As Integer = GetDaysInMonth(newYear, newMonth)
+            If newDay > daysInNewMonth Then
+                newDay = daysInNewMonth
+            End If
+            
+        Case 4 ' 年任务
+            newYear = newYear + 1
+            ' 处理闰年2月29日的情况
+            If newMonth = 2 And newDay = 29 Then
+                Dim daysInFeb As Integer = GetDaysInMonth(newYear, 2)
+                If daysInFeb < 29 Then
+                    newDay = daysInFeb
+                End If
+            End If
+    End Select
+    
+    ' 组合新的 SYSTEMTIME
+    Dim newSysTime As SYSTEMTIME
+    newSysTime.wYear = newYear
+    newSysTime.wMonth = newMonth
+    newSysTime.wDay = newDay
+    newSysTime.wHour = newHour
+    newSysTime.wMinute = newMinute
+    newSysTime.wSecond = newSecond
+    newSysTime.wMilliseconds = 0
+    
+    ' 转换回 OLE 日期序列号并返回
+    CalculateNextPeriod = AfxSystemTimeToVariantTime(newSysTime)
+End Function
+
+' 辅助子程序：调整日期（处理日进位到月、月进位到年）
+Sub AdjustDate(ByRef y As Integer, ByRef m As Integer, ByRef d As Integer)
+    While d > GetDaysInMonth(y, m)
+        d = d - GetDaysInMonth(y, m)
+        m = m + 1
+        If m > 12 Then
+            m = 1
+            y = y + 1
+        End If
+    Wend
+End Sub
+
+' 辅助函数：获取某年某月的天数
+Function GetDaysInMonth(y As Integer, m As Integer) As Integer
+    Select Case m
+        Case 1, 3, 5, 7, 8, 10, 12
+            GetDaysInMonth = 31
+        Case 4, 6, 9, 11
+            GetDaysInMonth = 30
+        Case 2
+            If (y Mod 400 = 0) Or (y Mod 4 = 0 And y Mod 100 <> 0) Then
+                GetDaysInMonth = 29
+            Else
+                GetDaysInMonth = 28
+            End If
+    End Select
+End Function
+
+' ==========================================
+' 根据任务类型和索引删除任务，并调整位置
+' 1周期2普通3延期
+' ==========================================
+Function DeleteTask(taskType As Integer, taskIndex As Integer) As Boolean
+   If taskType = 1 Then ' 周期任务
+      Dim cnt As Integer = UBound(periodicTasks)
+      If taskIndex < 0 Or taskIndex > cnt Then Return False
+      ' 将待删除元素之后的元素向前移动
+      For i As Integer = taskIndex To cnt - 1
+         periodicTasks(i) = periodicTasks(i + 1)
+      Next
+      ' 缩小数组
+      If cnt > 0 Then
+         ReDim Preserve periodicTasks(0 To cnt - 1)
+      Else
+         ReDim periodicTasks(0 To -1) ' 清空数组
+      End If
+      Return True
+   ElseIf taskType = 2 Then ' 普通任务
+      Dim cnt As Integer = UBound(regularTasks)
+      If taskIndex < 0 Or taskIndex > cnt Then Return False
+      For i As Integer = taskIndex To cnt - 1
+         regularTasks(i) = regularTasks(i + 1)
+      Next
+      If cnt > 0 Then
+         ReDim Preserve regularTasks(0 To cnt - 1)
+      Else
+         ReDim regularTasks(0 To -1)
+      End If
+      Return True
+   ElseIf taskType = 3 Then ' 延期任务
+      Dim cnt As Integer = UBound(deferredTasks)
+      If taskIndex < 0 Or taskIndex > cnt Then Return False
+      For i As Integer = taskIndex To cnt - 1
+         deferredTasks(i) = deferredTasks(i + 1)
+      Next
+      If cnt > 0 Then
+         ReDim Preserve deferredTasks(0 To cnt - 1)
+      Else
+         ReDim deferredTasks(0 To -1)
+      End If
+      Return True
+   End If
+   Return False
+End Function
+
+'==============================================
+' 将 SYSTEMTIME 的时间部分设置为 4:00:00，返回 OLE 日期序列号
+'==============================================
+Function SetTimeTo4AM(st As SYSTEMTIME) As Double
+    Dim newSt As SYSTEMTIME = st
+    newSt.wHour = 4
+    newSt.wMinute = 0
+    newSt.wSecond = 0
+    newSt.wMilliseconds = 0
+    Return  AfxSystemTimeToVariantTime(newSt)
+End Function
+
+
+'==============================================
+' 生成ID
+'==============================================
+' 初始化 ID 生成器，在加载完所有周期任务后调用一次
+Sub InitTaskIdGenerator()
+    Dim i As Long
+    Dim maxId As Long = 0
+    For i = 0 To UBound(periodicTasks)
+        If periodicTasks(i).id > maxId Then maxId = periodicTasks(i).id
+    Next
+    nextTaskId = maxId + 1
+End Sub
+
+' 生成新的唯一 ID
+Function GenerateTaskId() As Long
+    Dim newId As Long = nextTaskId
+    nextTaskId = nextTaskId + 1
+    Return newId
+End Function
+
+'==============================================
+' 复制子任务二维数组
+'==============================================
+Sub CopySubtasks(source() As String, dest() As String)
+    Dim rows As Long, cols As Long
+    rows = UBound(source, 1)
+    cols = UBound(source, 2)
+    If rows >= 0 And cols >= 0 Then
+        ReDim dest(rows, cols)
+        For i As Long = 0 To rows
+            For j As Long = 0 To cols
+                dest(i, j) = source(i, j)
+            Next
+        Next
+    Else
+        ReDim dest(0, 1)   ' 至少分配元信息行
+        dest(0, 0) = "0"
+        dest(0, 1) = "0"
+    End If
+End Sub
+
+
+' ==========================================
+' 更新延期任务
+' 参数：周期任务的数组索引
+' ==========================================
+Sub UpdateDeferredTask(ptIndex As Integer)
+    Dim pt As PeriodicTask = periodicTasks(ptIndex)
+    Dim found As Integer = -1
+    ' 查找是否已存在延期任务
+    For i As Integer = LBound(deferredTasks) To UBound(deferredTasks)
+        If deferredTasks(i).target = pt.id Then
+            found = i
+            Exit For
+        End If
+    Next
+    
+    If found = -1 Then
+        ' 不存在，创建新的延期任务
+        Dim newIdx As Integer = UBound(deferredTasks) + 1
+        ReDim Preserve deferredTasks(0 To newIdx)
+        With deferredTasks(newIdx)
+            .name = pt.Name & "(1)"
+            .createTime = Now()
+            .target = pt.id
+            .onList = 1
+            .tempStatus = 0
+            ' 复制子任务
+            CopySubtasks(pt.subtasks(), .subtasks())
+        End With
+    Else
+        ' 已存在，更新
+        With deferredTasks(found)
+            .onList = .onList + 1
+            .name = pt.Name & "(" & .onList & ")"
+        End With
+    End If
+End Sub
+
+
+' ==========================================
+' 更新所有任务的 onList 状态
+' 参数：nowtime - 当前时间（OLE 日期序列号）
+' ==========================================
+Sub UpdateOnList(nowtime As Double)
+   Dim i As Integer
+   ' 处理周期任务
+   For i = LBound(periodicTasks) To UBound(periodicTasks)
+      With periodicTasks(i)
+         ' 如果当前时间还未到本周期开始时间，任务未启动，直接设为0
+         If nowtime < .currentPeriod Then
+            .onList = 0
+            Continue For ' 跳过后续处理
+         End If
+         ' 循环处理，直到当前时间小于下一个周期时间
+         While nowtime >= .nextPeriod
+            If .completed = 1 Then
+               ' 已完成状态：直接推进到下一周期
+               .currentPeriod = .nextPeriod
+               .nextPeriod    = CalculateNextPeriod(.currentPeriod, .PeriodType)
+               .completed     = 0
+            Else ' .completed = 0
+               ' 未完成状态：生成延期任务，然后推进周期
+               UpdateDeferredTask(i) ' 调用已有的延期任务生成函数
+               .currentPeriod = .nextPeriod
+               .nextPeriod    = CalculateNextPeriod(.currentPeriod, .PeriodType)
+               ' completed 保持 0
+            End If
+         Wend
+         
+         ' 循环结束后，nowtime < nextPeriod
+         If .completed = 0 Then
+            .onList = 1 ' 未完成且未到下一周期，放入待办列表
+         Else
+            .onList = 0 ' 已完成，不显示
+         End If
+      End With
+   Next i
+   
+   ' 处理普通任务
+   For i = LBound(regularTasks) To UBound(regularTasks)
+      With regularTasks(i)
+         If nowtime >= .taskTime Then
+            .onList = 1 ' 到达执行时间，放入待办列表
+         Else
+            .onList = 0
+         End If
+      End With
+   Next i
+End Sub
+
+' ==========================================
+' 结算函数
+' ==========================================
+Sub SettleTasks()
+    Dim i As Integer
+    Dim j As Integer
+    
+    ' 处理周期任务
+    For i = LBound(periodicTasks) To UBound(periodicTasks)
+        With periodicTasks(i)
+            If .tempStatus = 1 Then
+                .completionCount = .completionCount + 1   ' 完成次数加1
+                .completed = 0                            ' 重置完成状态
+                ' 推进到下一周期
+                .currentPeriod = .nextPeriod
+                .nextPeriod = CalculateNextPeriod(.currentPeriod, .PeriodType)
+                .tempStatus = 0                           ' 清除标记
+            End If
+        End With
+    Next i
+    
+    ' ========== 处理延期任务 ==========
+    ' 倒序遍历，避免删除后索引变化
+    For i = UBound(deferredTasks) To LBound(deferredTasks) Step -1
+        With deferredTasks(i)
+            If .tempStatus = 1 Then
+                ' 根据 target 字段找到对应的周期任务
+                Dim targetId As Long = .target
+                Dim foundIdx As Integer = -1
+                For j = LBound(periodicTasks) To UBound(periodicTasks)
+                    If periodicTasks(j).id = targetId Then
+                        foundIdx = j
+                        Exit For
+                    End If
+                Next j
+                If foundIdx <> -1 Then
+                    ' 增加周期任务的完成次数（仅计数，不改变其他状态）
+                    periodicTasks(foundIdx).completionCount = periodicTasks(foundIdx).completionCount + 1
+                End If
+                ' 删除当前延期任务
+                DeleteTask(3, i) 
+            End If
+        End With
+    Next i
+    
+    ' ========== 处理普通任务 ==========
+    ' 倒序遍历，避免删除后索引变化
+    For i = UBound(regularTasks) To LBound(regularTasks) Step -1
+        With regularTasks(i)
+            If .tempStatus = 1 Then
+                ArchiveTask(2, i) 
+            End If
+        End With
+    Next i
+End Sub
+' ==========================================
+' 判断是否进入新的一天（以凌晨4点为界）
+' 参数：lastTime - 上次打开时间（OLE 日期序列号）
+'       currentTime - 当前时间（OLE 日期序列号，默认为 Now()）
+' 返回：True 表示当前时间属于新的一天（过了4点界限），False 表示仍在同一个4点周期内
+' ==========================================
+Function IsNewDay(lastTime As Double, currentTime As Double = 0) As Boolean
+    Dim dayOffset As Double = 4 / 24   ' 4小时对应的OLE数值
+    Dim cycleStartLast As Double
+    Dim cycleStartCurr As Double
+    
+    If currentTime = 0 Then currentTime = Now()
+    
+    ' 计算每个时间点所在的周期起始时间（以凌晨4点为基准）
+    cycleStartLast = Int(lastTime - dayOffset) + dayOffset
+    cycleStartCurr = Int(currentTime - dayOffset) + dayOffset
+    
+    ' 如果当前周期起始大于上次周期起始，说明进入了新的一天
+    Return (cycleStartCurr > cycleStartLast)
+End Function
+
+' ==========================================
+' 显示今天任务（每天首次打开时调用）
+' ==========================================
+Sub ShowToday()
+    Dim currentTime As Double
+    Dim i As Long
+    Dim idxCount As Long
+    
+    currentTime = Now()   ' 或使用测试时间，根据实际获取
+    
+    ' 判断是否为新的一天
+    If IsNewDay(lastOpenTime, currentTime) Then
+        ' 新的一天，清空上榜索引数组
+        ReDim periodicOnListIndices(0)
+        ReDim regularOnListIndices(0)
+        
+        ' 运行结算逻辑（处理已完成任务）
+        SettleTasks()
+        
+        ' 更新上榜状态
+        UpdateOnList(currentTime)
+        
+        ' 收集所有上榜任务的索引
+        ' 周期任务
+        idxCount = 0
+        For i = 0 To UBound(periodicTasks)
+            If periodicTasks(i).onList Then
+                ReDim Preserve periodicOnListIndices(idxCount)
+                periodicOnListIndices(idxCount) = i
+                idxCount = idxCount + 1
+            End If
+        Next
+        
+        ' 普通任务
+        idxCount = 0
+        For i = 0 To UBound(regularTasks)
+            If regularTasks(i).onList Then
+                ReDim Preserve regularOnListIndices(idxCount)
+                regularOnListIndices(idxCount) = i
+                idxCount = idxCount + 1
+            End If
+        Next
+        
+        ' 更新打开时间保存状态
+        lastOpenTime = currentTime
+        SaveAppState()
+    End If
+End Sub

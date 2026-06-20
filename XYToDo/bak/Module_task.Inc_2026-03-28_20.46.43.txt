@@ -1,0 +1,35 @@
+﻿' 周期任务
+Type PeriodicTask
+    Name As String
+    createTime As Double'本任务生成的时间，用now()
+    PeriodType As Integer ' 取值：0=无, 1=日, 2=周, 3=月, 4=年
+    currentPeriod As Double
+    nextPeriod As Double
+    completed As Integer
+    completionCount As Long
+    onList As Integer
+    tempStatus As Integer               
+    subtasks As String                 
+End Type
+
+' 延期任务
+Type DeferredTask
+    name As String
+    createTime As Double'本任务生成的时间，用now()
+    target As Double '主任务的createTime
+    onList As Integer
+    tempStatus As Integer            
+    subtasks As String                 
+End Type
+
+' 普通任务
+Type RegularTask
+    name As String
+    createTime As Double
+    taskTime As Double
+    onList As Integer
+    tempStatus As Integer               
+    subtasks As String               
+ End Type
+ 
+ 

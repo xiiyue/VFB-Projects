@@ -1,0 +1,123 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.8
+Locked=0
+
+[Form]
+Name=任务管理
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_VISIBLE,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_CHILD
+Style=0 - 无边框
+Icon=
+Caption=任务管理
+StartPosition=0 - 手动
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=600
+Height=400
+TopMost=False
+Child=True
+MdiChild=False
+TitleBar=False
+SizeBox=False
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[YFTreeView]
+Name=YFTreeView_任务管理
+Help=
+Index=-1
+Style=0 - 无边框
+Enabled=True
+Visible=True
+ForeColor=&H000000
+BackColor=&HFFFFFF
+MoveColor=&HFFE5CC
+SelFore=&HFFFFFF
+SelBack=&HE57300
+ScrollFore=&H878787
+ScrollBack=&HE1E1E1
+ScrollMove=&H4B4B4B
+LinesColor=&HA5A5A5
+Font=微软雅黑,11
+ItemHeight=20
+Indent=10
+HasLines=False
+Check=False
+GridLines=False
+FocusLine=True
+NoHScroll=False
+Left=10
+Top=10
+Width=200
+Height=380
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[sqlite3]
+Name=SQLiteBox1
+Help=
+Lib=1 - 内置库
+Left=680
+Top=170
+Tag=
+
+[Frame]
+Name=Frame1
+Help=
+Index=-1
+Caption=Frame1
+Frame=True
+TextAlign=0 - 左对齐
+Fillet=5
+BorderWidth=1
+BorderColor=SYS,16
+ForeColor=SYS,8
+BackColor=SYS,25
+Enabled=True
+Visible=True
+Font=微软雅黑,9,0
+Left=220
+Top=250
+Width=370
+Height=140
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+'这是标准的工程模版，你也可做自己的模版。
+'写好工程，复制全部文件到VFB软件文件夹里【template】里即可，子文件夹名为 VFB新建工程里显示的名称
+'快去打造属于你自己的工程模版吧。
+

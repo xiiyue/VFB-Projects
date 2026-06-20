@@ -1,0 +1,575 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.8
+Locked=0
+
+[Form]
+Name=条子计算
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_VISIBLE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_BORDER,WS_CAPTION,WS_SYSMENU,WS_EX_TOOLWINDOW,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_POPUP,WS_SIZEBOX
+Style=4 - 工具窗口
+Icon=
+Caption=牛堡
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=327
+Height=390
+TopMost=False
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=True
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Label]
+Name=固定文字
+Help=
+Index=0
+Style=0 - 无边框
+Caption=当前阶段
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=60
+Top=20
+Width=90
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=固定文字
+Help=
+Index=1
+Style=0 - 无边框
+Caption=当前进度
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=30
+Top=60
+Width=120
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=固定文字
+Help=
+Index=2
+Style=0 - 无边框
+Caption=当前条子
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=60
+Top=100
+Width=90
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=固定文字
+Help=
+Index=3
+Style=0 - 无边框
+Caption=条子速度(每5分)
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=0
+Top=140
+Width=150
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Line]
+Name=Line1
+Help=
+Index=-1
+Style=0 - 顶部
+BorderWidth=1
+ArrowStartW=0 - 无箭头
+ArrowStartH=0 - 无箭头
+ArrowEndW=0 - 无箭头
+ArrowEndH=0 - 无箭头
+BorderColor=&HFF000000
+Enabled=True
+Visible=True
+Left=10
+Top=190
+Width=300
+Height=10
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=固定文字
+Help=
+Index=4
+Style=0 - 无边框
+Caption=本阶段剩余
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=5 - 中右对齐
+Prefix=True
+Ellipsis=False
+Left=20
+Top=210
+Width=130
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=固定文字
+Help=
+Index=5
+Style=0 - 无边框
+Caption=全完成剩余
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=5 - 中右对齐
+Prefix=True
+Ellipsis=False
+Left=20
+Top=260
+Width=130
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[ComboBox]
+Name=阶段选择
+Help=
+Index=-1
+Style=1 - 文本框和下拉框
+Custom=
+OwnDraw=0 - 系统绘制
+LabelHeight=20
+ItemHeight=18
+HasString=False
+Sorted=False
+NoHeight=False
+AutoHscroll=True
+MaxLength=0
+Uppercase=False
+Lowercase=False
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,12
+Left=180
+Top=20
+Width=100
+Height=22
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[ComboBox]
+Name=进度选择
+Help=
+Index=-1
+Style=0 - 标签和下拉框
+Custom=
+OwnDraw=0 - 系统绘制
+LabelHeight=20
+ItemHeight=18
+HasString=False
+Sorted=False
+NoHeight=False
+AutoHscroll=True
+MaxLength=0
+Uppercase=False
+Lowercase=False
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,12
+Left=180
+Top=60
+Width=100
+Height=22
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[TextBox]
+Name=条子输入
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=0
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,12
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=180
+Top=100
+Width=100
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[UpDown]
+Name=UpDown1
+Help=
+Index=-1
+Style=1 - 在伙伴右边
+Buddy=速度输入
+Horz=False
+Setbuddyint=True
+Base=0 - 10进制
+HotTrack=False
+Thousands=False
+Wrap=False
+Max=100
+Min=1
+Value=1
+Enabled=True
+Visible=True
+Left=280
+Top=140
+Width=20
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[TextBox]
+Name=速度输入
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=10
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,12
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=False
+AutoVScroll=False
+Left=180
+Top=140
+Width=100
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[Label]
+Name=展示时间
+Help=
+Index=0
+Style=0 - 无边框
+Caption=0
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=3 - 中左对齐
+Prefix=True
+Ellipsis=False
+Left=170
+Top=210
+Width=100
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=展示时间
+Help=
+Index=1
+Style=0 - 无边框
+Caption=0
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14
+FontWidth=0
+FontAngle=0
+TextAlign=3 - 中左对齐
+Prefix=True
+Ellipsis=False
+Left=170
+Top=260
+Width=100
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=计算按钮
+Help=
+Index=-1
+Caption=计     算
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,16
+Left=50
+Top=300
+Width=220
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+DimP stage(6) As String
+stage(0) = "原木"
+stage(1) = "青铜"
+stage(2) = "白银"
+stage(3) = "黄金"
+stage(4) = "白金"
+stage(5) = "秘银"
+stage(6) = "钻石"
+DimP stageData(6, 2) As Integer = {{1, 100, 4}, {101, 220, 4}, {221, 395, 5}, {396, 595, 5}, {596, 820, 5}, {821, 1120, 6}, {1121, 1450, 6}}
+DimP selectstage As Integer = 0         ' 代表阶段选择的索引（0开始）
+DimP selectsubstage As Integer = 0 ' 代表进度选择的数字 （1开始）
+DimP barnum As Integer = 0 ' 当前阶段的当前进度下，界面里显示的条子量
+DimP barall As Integer = 0 ' 目前获得的条子总量
+DimP speed As Integer = 10
+DimP 某阶段某进度的条子区间(5,1) As Integer
+
+Sub 计算区间(i As Integer)
+   ' i 指 选择的阶段selectstage
+   Dim 始条量 As Integer = stageData(i, 0)
+   Dim 终条量 As Integer = stageData(i, 1)
+   Dim 进度个数 As Integer = stageData(i, 2)
+   Dim 进度的长度 As Integer
+   Dim 左区间 As Integer
+   Dim 右区间 As Integer
+   进度的长度 = (终条量 - 始条量 + 1) / 进度个数
+   左区间 = 
+   Erase 某阶段某进度的条子区间
+   
+   
+End Sub
+
+
+
+Sub 结果计算()
+   
+End Sub
+
+
+
+'[条子计算]事件 : 窗口完全显示后。
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
+Sub 条子计算_Shown(hWndForm As hWnd, UserData As Integer)
+   ' 初始化
+   Dim i As Integer
+   For i = LBound(stage) To UBound(stage)
+      阶段选择.AddItem stage(i)
+   Next i
+   阶段选择.ListIndex = 0
+   For i = 1 To 4
+      进度选择.AddItem Str(i)
+   Next
+   进度选择.ListIndex = 0
+End Sub
+
+'[条子计算.阶段选择]事件 : 列表框中更改当前选择时
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub 条子计算_阶段选择_CBN_SelChange(hWndForm As hWnd, hWndControl As hWnd)
+   selectstage = 阶段选择.ListIndex
+   ' 刷新进度选择下拉框
+   If selectstage >= 0 And selectstage <= 6 Then
+      Dim 最大进度 As Integer = stageData(selectstage, 2)
+      ' 清空进度列表
+      进度选择.Clear
+      Dim i As Integer
+      For i = 1 To 最大进度
+         进度选择.AddItem Str(i)
+      Next
+      进度选择.ListIndex = 0
+   End If
+End Sub
+
+'[条子计算.进度选择]事件 : 列表框中更改当前选择时
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub 条子计算_进度选择_CBN_SelChange(hWndForm As hWnd, hWndControl As hWnd)
+   selectsubstage = 进度选择.ListIndex +1
+End Sub
+
+'[条子计算.条子输入]事件 : 文本已经被修改（修改前用 EN_UPDATE
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub 条子计算_条子输入_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+   barnum = ValInt(条子输入.Text)
+   
+End Sub
+
+'[条子计算.速度输入]事件 : 文本已经被修改（修改前用 EN_UPDATE
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub 条子计算_速度输入_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+   speed = ValInt(速度输入.Text)
+   
+End Sub
+
+
+
+
+
+

@@ -1,0 +1,122 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.8
+Locked=0
+
+[Form]
+Name=Form1
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_VISIBLE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_EX_TOPMOST,WS_BORDER,WS_CAPTION,WS_SYSMENU,WS_EX_TOOLWINDOW,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_POPUP
+Style=4 - 工具窗口
+Icon=
+Caption=文本工具
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=1191
+Height=271
+TopMost=True
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=False
+SysMenu=True
+MaximizeBox=False
+MinimizeBox=False
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[ComboBox]
+Name=Combo_符号对
+Help=
+Index=-1
+Style=0 - 标签和下拉框
+Custom=
+OwnDraw=0 - 系统绘制
+LabelHeight=20
+ItemHeight=18
+HasString=False
+Sorted=False
+NoHeight=False
+AutoHscroll=True
+MaxLength=0
+Uppercase=False
+Lowercase=False
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+Left=20
+Top=60
+Width=70
+Height=25
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Frame]
+Name=Frame1
+Help=
+Index=-1
+Caption=全工具
+Frame=True
+TextAlign=0 - 左对齐
+Fillet=5
+BorderWidth=1
+BorderColor=SYS,16
+ForeColor=SYS,8
+BackColor=SYS,25
+Enabled=True
+Visible=True
+Font=微软雅黑,9,0
+Left=10
+Top=40
+Width=1170
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+
+'[Form1]事件 : 窗口完全显示后。
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
+Sub Form1_Shown(hWndForm As hWnd,UserData As Integer)
+   Init_符号对()
+End Sub
+
+
+
+
+
+
+

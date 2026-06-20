@@ -1,0 +1,73 @@
+﻿
+DimP 符号对(...) As ZString*12 = {"符号对{xx}","中“”", """", "中‘’", "''", "中《》", "<>", "中【】", "[]", "中「」", "{}", "中（）", "()"}
+
+'初始化符号对
+Sub Init_符号对()
+   Dim i As Integer 
+   For i = 0 To UBound(符号对)
+      Form1.Combo_符号对.AddItem 符号对(i)
+   Next
+   Form1.Combo_符号对.ListIndex = 0
+End Sub
+
+
+
+' 我的函数
+' 插入标点符号到当前活动窗口的焦点控件
+Sub InsertChineseQuotes(i as Integer)
+   Dim hWndFore As hWnd
+   Dim hWndFocus As hWnd
+   Dim tid As Long, pid As Long
+   Dim oldClipboard As String
+   Dim selectedText As String
+   Dim newText As String
+
+   ' 保存当前剪贴板内容（可选，为了不破坏用户剪贴板）
+   oldClipboard = FF_ClipboardGetText()
+
+   ' 获取前台窗口和焦点控件
+   hWndFore = GetForegroundWindow()
+   If hWndFore = 0 Then Exit Sub
+   
+   tid = GetWindowThreadProcessId(hWndFore, @pid)
+   AttachThreadInput(GetCurrentThreadId(), tid, True)
+   hWndFocus = GetFocus()
+   AttachThreadInput(GetCurrentThreadId(), tid, False)
+   
+   If hWndFocus = 0 Then Exit Sub
+
+   ' 1. 发送 Ctrl+C 复制选中文本
+   ' 注意：有些控件需要先激活，所以先发送 Ctrl+A 全选？但我们要保留选中文本，所以只复制
+   ' 发送 Ctrl+C 按键组合
+   FF_KeySend(hWndFocus, VK_CONTROL, KEY_DOWN)
+   FF_KeySend(hWndFocus, Asc("C"), KEY_CLICK)
+   FF_KeySend(hWndFocus, VK_CONTROL, KEY_UP)
+   
+   ' 稍等片刻让剪贴板更新（可调整延时）
+   Sleep(50)
+   
+   ' 2. 获取剪贴板文本
+   selectedText = FF_ClipboardGetText()
+   
+   ' 3. 构建新文本
+   If selectedText <> "" Then
+      newText = "“" & selectedText & "”"
+   Else
+      ' 如果没有选中文本，则只插入一对引号，光标放在中间
+      newText = "“”"
+   End If
+   
+   ' 4. 将新文本放入剪贴板
+   FF_ClipboardSetText(newText)
+   
+   ' 5. 发送 Ctrl+V 粘贴
+   FF_KeySend(hWndFocus, VK_CONTROL, KEY_DOWN)
+   FF_KeySend(hWndFocus, Asc("V"), KEY_CLICK)
+   FF_KeySend(hWndFocus, VK_CONTROL, KEY_UP)
+   
+   ' 6. 恢复原剪贴板（可选）
+   If oldClipboard <> "" Then
+      Sleep(100)  ' 等待粘贴完成
+      FF_ClipboardSetText(oldClipboard)
+   End If
+End Sub

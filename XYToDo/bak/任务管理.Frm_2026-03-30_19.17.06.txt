@@ -1,0 +1,710 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.10
+Locked=0
+
+[Form]
+Name=任务管理
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_VISIBLE,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_CHILD
+Style=0 - 无边框
+Icon=
+Caption=任务管理
+StartPosition=0 - 手动
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=600
+Height=370
+TopMost=False
+Child=True
+MdiChild=False
+TitleBar=False
+SizeBox=False
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[ListBox]
+Name=List_全任务列表
+Help=
+Index=-1
+Custom=
+Style=0 - 单选
+BStyle=1 - 细边框
+OwnDraw=0 - 系统绘制
+ItemHeight=18
+HasString=False
+Sorted=False
+NoHeight=True
+MultiColumn=False
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+Left=10
+Top=10
+Width=200
+Height=350
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Frame]
+Name=Frame2
+Help=
+Index=-1
+Caption=Frame2
+Frame=True
+TextAlign=0 - 左对齐
+Fillet=5
+BorderWidth=1
+BorderColor=SYS,16
+ForeColor=SYS,8
+BackColor=SYS,25
+Enabled=True
+Visible=False
+Font=微软雅黑,9,0
+Left=230
+Top=-4
+Width=360
+Height=120
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=任务名
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,11
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=230
+Top=20
+Width=60
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[TextBox]
+Name=Text_任务名
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=300
+Top=10
+Width=280
+Height=40
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[Label]
+Name=Label2
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=周期
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,11
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=240
+Top=60
+Width=50
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Option]
+Name=Option1
+Help=
+Index=-1
+Style=0 - 标准
+Caption=无
+TextAlign=3 - 中左对齐
+Alignment=0 - 文本在左边
+Value=0 - 未选择
+Multiline=True
+GroupName=OptionGroup1
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,9,0
+Left=320
+Top=60
+Width=30
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Option]
+Name=Option2
+Help=
+Index=-1
+Style=0 - 标准
+Caption=日
+TextAlign=3 - 中左对齐
+Alignment=0 - 文本在左边
+Value=0 - 未选择
+Multiline=True
+GroupName=OptionGroup1
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,9,0
+Left=360
+Top=60
+Width=30
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Option]
+Name=Option3
+Help=
+Index=-1
+Style=0 - 标准
+Caption=周
+TextAlign=3 - 中左对齐
+Alignment=0 - 文本在左边
+Value=0 - 未选择
+Multiline=True
+GroupName=OptionGroup1
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,9,0
+Left=400
+Top=60
+Width=30
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Option]
+Name=Option4
+Help=
+Index=-1
+Style=0 - 标准
+Caption=月
+TextAlign=3 - 中左对齐
+Alignment=0 - 文本在左边
+Value=0 - 未选择
+Multiline=True
+GroupName=OptionGroup1
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,9,0
+Left=440
+Top=60
+Width=30
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Option]
+Name=Option5
+Help=
+Index=-1
+Style=0 - 标准
+Caption=年
+TextAlign=3 - 中左对齐
+Alignment=0 - 文本在左边
+Value=0 - 未选择
+Multiline=True
+GroupName=OptionGroup1
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,9,0
+Left=480
+Top=60
+Width=30
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Label]
+Name=Label3
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=日期
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,11
+FontWidth=0
+FontAngle=0
+TextAlign=2 - 右对齐
+Prefix=True
+Ellipsis=False
+Left=240
+Top=90
+Width=50
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[DateTimePicker]
+Name=DateTimePicker1
+Help=
+Index=-1
+Style=1 - 长日期
+UpDown=False
+ShowNone=False
+AppCanparse=False
+RightAlign=False
+ForeColor=SYS,8
+BackColor=SYS,5
+BackGround=SYS,5
+TitleForeColor=SYS,14
+TitleBackColor=SYS,13
+TrailingForeColor=SYS,17
+FormatString=
+MinDate=1601-01-01
+MaxDate=9999-12-31
+InitialDate=
+Enabled=True
+Visible=True
+Font=微软雅黑,9,0
+Left=320
+Top=90
+Width=120
+Height=20
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[TextBox]
+Name=Text_子任务
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=输入子任务
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=240
+Top=280
+Width=220
+Height=30
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[Frame]
+Name=Frame3
+Help=
+Index=-1
+Caption=Frame3
+Frame=True
+TextAlign=0 - 左对齐
+Fillet=5
+BorderWidth=1
+BorderColor=SYS,16
+ForeColor=SYS,8
+BackColor=SYS,25
+Enabled=True
+Visible=False
+Font=微软雅黑,9,0
+Left=230
+Top=120
+Width=350
+Height=190
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[ListBox]
+Name=List_子任务
+Help=
+Index=-1
+Custom=
+Style=0 - 单选
+BStyle=1 - 细边框
+OwnDraw=0 - 系统绘制
+ItemHeight=18
+HasString=False
+Sorted=False
+NoHeight=True
+MultiColumn=False
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+Left=250
+Top=140
+Width=190
+Height=130
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[YFbunGroup]
+Name=YFbunGroup1
+Help=
+Index=-1
+Style=0 - 无边框
+BunStyle=1 - 垂直
+BunSizeW=-1
+BunSizeH=-1
+BunForm=1 - 框线
+BunCircular=0
+Button=任务管理_YFbunGroup1_addsubtask添加子任务000-1-1-1-1-1-1-1-1-1任务管理_YFbunGroup1_editsubtask修改子任务000-1-1-1-1-1-1-1-1-1任务管理_YFbunGroup1_delsubtask删除子任务000-1-1-1-1-1-1-1-1-1任务管理_YFbunGroup1_moveup上移000-1-1-1-1-1-1-1-1-1任务管理_YFbunGroup1_movedown下移000-1-1-1-1-1-1-1-1-1
+Enabled=True
+Visible=True
+ForeColor=SYS,18
+BackColor=SYS,15
+ColorSel=SYS,13
+ColorSelTxt=SYS,14
+ColorMove=RGB(200,230,255)
+Font=微软雅黑,9,0
+IcoSize=16
+IcoPos=0 - 左图右字
+Spaces=5
+Left=460
+Top=130
+Width=110
+Height=180
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[YFbunGroup]
+Name=YFbunGroup2
+Help=
+Index=-1
+Style=0 - 无边框
+BunStyle=0 - 水平
+BunSizeW=-1
+BunSizeH=-1
+BunForm=0 - 无框
+BunCircular=0
+Button=任务管理_YFbunGroup2_newtask新建任务000161551951677592612871727637007116774896-1-1-10任务管理_YFbunGroup2_toShow上榜0016210850167759264955675244506915269851-1-1-10任务管理_YFbunGroup2_save修改001153121421677592612223243604570116772031-1-1-10任务管理_YFbunGroup2_archive归档0017615891677592655699627836912445695-1-1-10任务管理_YFbunGroup2_delete删除0014474095167759263487167177648116448255-1-1-10
+Enabled=True
+Visible=True
+ForeColor=SYS,18
+BackColor=SYS,15
+ColorSel=SYS,13
+ColorSelTxt=SYS,14
+ColorMove=RGB(200,230,255)
+Font=微软雅黑,14
+IcoSize=16
+IcoPos=0 - 左图右字
+Spaces=5
+Left=223
+Top=330
+Width=360
+Height=30
+Layout=14 - 主窗等比例
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+
+[AllCode]
+
+'[任务管理]事件 : 窗口完全显示后。
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
+Sub 任务管理_Shown(hWndForm As hWnd, UserData As Integer)
+   ' 初始化 全任务List
+   Dim i        As Integer
+   Dim itemData As Long
+   List_全任务列表.Clear ' 清空原有内容
+   List_全任务列表.AddItem "=====周期任务=====", -1
+   For i = LBound(periodicTasks) To UBound(periodicTasks)
+      itemData = (1 Shl 16) Or i ' 高16位 保存 任务类型； 低16位 保存该任务的数组索引
+      List_全任务列表.AddItem periodicTasks(i).Name, itemData
+   Next i
+   List_全任务列表.AddItem "=====普通任务=====", -1
+   For i = LBound(regularTasks) To UBound(regularTasks)
+      itemData = (2 Shl 16) Or i
+      List_全任务列表.AddItem regularTasks(i).Name, itemData
+   Next i
+End Sub
+
+'[任务管理.List_全任务列表]事件 : 选择了列表
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub 任务管理_List_全任务列表_LBN_SelChange(hWndForm As hWnd, hWndControl As hWnd)
+   Dim idx As Integer = List_全任务列表.ListIndex
+   Dim i As Integer
+   Dim subCount As Integer 
+   If idx < 0 Then Exit Sub
+   
+   
+   Dim itemData As Long = List_全任务列表.ItemData(idx)
+   If itemData = -1 Then Exit Sub ' 标题行，忽略
+   
+   Dim taskType  As Integer = (itemData Shr 16) And &HFFFF ' 高16位，区分周期还是普通
+   Dim taskIndex As Integer = itemData          And &HFFFF ' 低16位，任务数组索引
+   
+   ' 重置单选按钮
+   Option1.Value = False
+   Option2.Value = False
+   Option3.Value = False
+   Option4.Value = False
+   Option5.Value = False
+   
+   ' 清空子任务列表
+   List_子任务.Clear
+   
+   Select Case taskType
+      Case 1 ' 周期任务
+         Dim ptask As PeriodicTask = periodicTasks(taskIndex)
+         ' 任务名编辑框
+         Text_任务名.Text = ptask.Name
+         ' 时间选择器
+         DateTimePicker1.DateTime = AfxVariantTimeToSystemTime(ptask.nextPeriod)
+         ' 周期选择
+         Select Case ptask.PeriodType
+            Case 1 ' 日
+               Option2.Value = True
+            Case 2 ' 周
+               Option3.Value = True
+            Case 3 ' 月
+               Option4.Value = True
+            Case 4 ' 年
+               Option5.Value = True
+            Case Else ' 0 或其他，按普通任务处理
+               Option1.Value = True
+         End Select
+         ' 填充子任务列表
+         subCount = Val(ptask.subtasks(0, 1))  ' 子任务数量（字符串转数值）
+         For i = 1 To subCount
+            List_子任务.AddItem ptask.subtasks(i, 0)  ' 添加任务名（列0）
+         Next i
+   
+      Case 2 ' 普通任务
+         Dim rtask As RegularTask = regularTasks(taskIndex)
+         Text_任务名.Text         = rtask.Name
+         DateTimePicker1.DateTime = AfxVariantTimeToSystemTime(rtask.taskTime)
+         Option1.Value = True
+         ' 填充子任务列表
+         subCount = Val(rtask.subtasks(0, 1))  ' 子任务数量（字符串转数值）
+         For i = 1 To subCount
+            List_子任务.AddItem rtask.subtasks(i, 0)  ' 添加任务名（列0）
+         Next i
+   End Select
+  
+End Sub
+
+'[任务管理.YFbunGroup1]事件 : 点击了某个按钮
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'nID       按钮号，鼠标点击了某个按钮，就是点击后释放鼠标时触发
+Function 任务管理_YFbunGroup1_Command(hWndForm As hWnd, hWndControl As hWnd, nID As Long) As Long
+   Dim idx      As Integer = List_全任务列表.ListIndex
+   Dim itemData As Long    = List_全任务列表.ItemData(idx)
+   If itemData = -1 Then Exit Sub ' 标题行，忽略
+   
+   Dim taskType  As Integer = (itemData Shr 16) And &HFFFF ' 高16位，任务类型，1是periodicTasks()，2是regularTasks()
+   Dim taskIndex As Integer = itemData          And &HFFFF ' 低16位，任务数组索引，精确定位到所选的任务，periodicTasks(taskIndex)或regularTasks(taskIndex)
+   
+   Dim subtask_name As String
+   subtask_name = Trim(Text_子任务.Text)
+   Dim subIdx As Integer = List_子任务.ListIndex
+   
+   Select Case nID
+      Case 任务管理_YFbunGroup1_addsubtask ' 添加子任务
+         If subtask_name = "" Then
+            MsgBox("子任务名称不能为空！")
+            Exit Function
+         End If
+         
+         If taskType = 1 Then ' 周期任务
+            With periodicTasks(taskIndex)
+               Dim count As Integer = Val(.subtasks(0, 1)) ' 当前子任务数量
+               ' 增加一行：行索引从 0 到 count+1，列固定为 0..1
+               ReDim Preserve .subtasks(0 To count + 1, 0 To 1)
+               ' 添加新子任务到新行
+               .subtasks(count + 1, 0) = subtask_name
+               .subtasks(count + 1, 1) = "0" ' 状态初始 0
+               ' 更新元信息
+               .subtasks(0, 0) = "1" ' 有子任务
+               .subtasks(0, 1) = Str(count + 1)
+            End With
+         Else ' 普通任务
+            With regularTasks(taskIndex)
+               Dim count As Integer = Val(.subtasks(0, 1))
+               ReDim Preserve .subtasks(0 To count + 1, 0 To 1)
+               .subtasks(count + 1, 0) = subtask_name
+               .subtasks(count + 1, 1) = "0"
+               .subtasks(0, 0)         = "1"
+               .subtasks(0, 1)         = Str(count + 1)
+            End With
+         End If
+         
+         ' 刷新子任务列表
+         RefreshSubtaskList(taskType, taskIndex)
+         ' 清空输入框
+         Text_子任务.Text = ""
+         
+      Case 任务管理_YFbunGroup1_editsubtask ' 修改子任务
+         
+      Case 任务管理_YFbunGroup1_delsubtask ' 删除子任务
+         
+      Case 任务管理_YFbunGroup1_moveup ' 上移
+         
+      Case 任务管理_YFbunGroup1_movedown ' 下移
+         
+   End Select
+   
+   Function = TRUE '  如果你处理了事件，就返回 Return TRUE ,控件就不进行默认处理了。
+   
+End Function
+
+
+
+
+
+

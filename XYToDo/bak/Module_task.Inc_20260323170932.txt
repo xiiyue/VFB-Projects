@@ -1,0 +1,94 @@
+﻿' 周期类型枚举
+Enum Period
+    PERIOD_NONE = 0
+    PERIOD_DAILY
+    PERIOD_WEEKLY
+    PERIOD_MONTHLY
+    PERIOD_YEARLY
+End Enum
+
+' 周期任务
+Type PeriodicTask
+    name As String
+    createTime As Double
+    PeriodType As Period
+    currentPeriod As Double
+    nextPeriod As Double
+    completed As Boolean
+    completionCount As Long
+    onList As Boolean
+    tempStatus As Boolean               
+    subtasks As String                 
+End Type
+
+' 延期任务
+Type DeferredTask
+    name As String
+    createTime As Double
+    target As Double
+    onList As Boolean
+    tempStatus As Boolean            
+    subtasks As String                 
+End Type
+
+' 普通任务
+Type RegularTask
+    name As String
+    createTime As Double
+    taskTime As Double
+    onList As Boolean
+    tempStatus As Boolean               
+    subtasks As String               
+ End Type
+ 
+ ' 子任务项类型
+Type SubTaskItem
+    name As String
+    completed As Boolean
+ End Type
+ 
+ ' 解析子任务字符串
+' 输入: subtaskText - 格式如 "任务1|1||任务2|0||任务3|1"
+' 输出: items() - 动态数组，包含解析出的子任务项
+' 返回值: 子任务数量
+Function ParseSubtasks(subtaskText As String, items() As SubTaskItem) As Long
+    Dim parts() As String
+    Dim count As Long = 0
+    Dim i As Long, j As Long
+    Dim temp As String
+    
+    ' 先用 "||" 分割得到每个子任务字符串
+    Split(subtaskText, "||", parts())
+    
+    For i = 0 To UBound(parts)
+        If Len(parts(i)) > 0 Then
+            ' 再用 "|" 分割任务名和状态
+            Dim subParts() As String
+            Split(parts(i), "|", subParts())
+            
+            If UBound(subParts) >= 1 Then
+                count = count + 1
+                ReDim Preserve items(count - 1)
+                items(count - 1).name = subParts(0)
+                items(count - 1).completed = (ValInt(subParts(1)) <> 0)
+            End If
+        End If
+    Next
+    
+    Return count
+End Function
+
+' 打包子任务列表为字符串
+' 输入: items() - 子任务项数组, count - 子任务数量
+' 返回值: 打包后的字符串，格式如 "任务1|1||任务2|0||任务3|1"
+Function PackSubtasks(items() As SubTaskItem, count As Long) As String
+    Dim result As String = ""
+    Dim i As Long
+    
+    For i = 0 To count - 1
+        If i > 0 Then result = result & "||"
+        result = result & items(i).name & "|" & IIf(items(i).completed, "1", "0")
+    Next
+    
+    Return result
+End Function

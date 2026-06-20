@@ -1,0 +1,165 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.8
+Locked=0
+
+[Form]
+Name=Form1
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_VISIBLE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_EX_TOPMOST,WS_BORDER,WS_CAPTION,WS_SYSMENU,WS_EX_TOOLWINDOW,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_POPUP
+Style=4 - 工具窗口
+Icon=
+Caption=文本工具
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=1191
+Height=89
+TopMost=True
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=False
+SysMenu=True
+MaximizeBox=False
+MinimizeBox=False
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[ComboBox]
+Name=Combo_符号对
+Help=
+Index=-1
+Style=0 - 标签和下拉框
+Custom=
+OwnDraw=0 - 系统绘制
+LabelHeight=20
+ItemHeight=18
+HasString=False
+Sorted=False
+NoHeight=False
+AutoHscroll=True
+MaxLength=0
+Uppercase=False
+Lowercase=False
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+Left=10
+Top=20
+Width=80
+Height=25
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Button]
+Name=Command1
+Help=
+Index=-1
+Caption=简繁
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=110
+Top=20
+Width=100
+Height=20
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Frame]
+Name=Frame1
+Help=
+Index=-1
+Caption=全工具
+Frame=True
+TextAlign=0 - 左对齐
+Fillet=5
+BorderWidth=1
+BorderColor=SYS,16
+ForeColor=SYS,8
+BackColor=SYS,25
+Enabled=True
+Visible=True
+Font=微软雅黑,9,0
+Left=0
+Top=0
+Width=1170
+Height=50
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+
+'[Form1]事件 : 窗口完全显示后。
+Sub Form1_Shown(hWndForm As hWnd, UserData As Integer)
+   ' 初始化当前前台窗口
+    g_hWndCurrent = GetForegroundWindow()
+    ' 安装钩子
+    g_hHook = SetWinEventHook(&H3, &H3, 0, @MyWinEventProc, 0, 0, 0)
+    If g_hHook = 0 Then
+        MsgBox "无法监听窗口切换，功能可能受限。"
+     End If   
+   ' 初始化
+   Init_符号对()
+End Sub
+
+'[Form1]事件 : 即将销毁窗口
+Sub Form1_WM_Destroy(hWndForm As hWnd)
+    If g_hHook <> 0 Then
+        UnhookWinEvent(g_hHook)
+        g_hHook = 0
+    End If
+End Sub
+
+'[Form1.Combo_符号对]事件 : 列表框中更改当前选择时
+Sub Form1_Combo_符号对_CBN_SelChange(hWndForm As hWnd, hWndControl As hWnd)
+   Dim idx As Integer = Combo_符号对.ListIndex
+   If idx >= 1 Then
+     InsertSymbolPair(idx) 
+   End If
+End Sub
+
+
+
+

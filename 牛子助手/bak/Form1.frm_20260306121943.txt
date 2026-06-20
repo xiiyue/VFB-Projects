@@ -1,0 +1,421 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.8
+Locked=0
+
+[Form]
+Name=Form1
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_THICKFRAME,WS_CAPTION,WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_VISIBLE,WS_EX_WINDOWEDGE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_POPUP,WS_SIZEBOX
+Style=3 - 常规窗口
+Icon=
+Caption=Form1
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=275
+Height=222
+TopMost=False
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=True
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Label]
+Name=倒计时
+Help=
+Index=0
+Style=0 - 无边框
+Caption=倒计时
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=20
+Top=20
+Width=90
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=倒计时
+Help=
+Index=1
+Style=0 - 无边框
+Caption=倒计时
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=20
+Top=70
+Width=90
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=倒计时
+Help=
+Index=2
+Style=0 - 无边框
+Caption=倒计时
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=20
+Top=120
+Width=90
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=启动
+Help=
+Index=0
+Caption=开始
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=140
+Top=20
+Width=45
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=启动
+Help=
+Index=1
+Caption=开始
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=140
+Top=70
+Width=45
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=启动
+Help=
+Index=2
+Caption=开始
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=140
+Top=120
+Width=45
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Timer]
+Name=Timer1
+Help=
+Index=-1
+Interval=100
+Enabled=False
+Left=100
+Top=20
+Tag=
+
+[Button]
+Name=减时
+Help=
+Index=0
+Caption=-5s
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=190
+Top=20
+Width=30
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=减时
+Help=
+Index=1
+Caption=-5s
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=190
+Top=70
+Width=30
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=减时
+Help=
+Index=2
+Caption=-5s
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=190
+Top=120
+Width=30
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=加时
+Help=
+Index=0
+Caption=+5s
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=220
+Top=20
+Width=30
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=加时
+Help=
+Index=1
+Caption=+5s
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=220
+Top=70
+Width=30
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=加时
+Help=
+Index=2
+Caption=+5s
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,9,0
+Left=220
+Top=120
+Width=30
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+
+
+
+'计时器初始值
+Dim Shared 初始倒计时(1 To 3, 1 To 2) As Integer = > _
+{ _
+    {7, 30}, _  ' 第一行赋值给 初始倒计时(1,1) 和 (1,2)
+    {2, 10}, _ ' 第二行赋值给 初始倒计时(2,1) 和 (2,2)
+    {9, 50} _  ' 第三行赋值给 初始倒计时(3,1) 和 (3,2)
+}
+
+Dim Shared 总时间(1 To 3) As Double
+Dim Shared 开始点(1 To 3) As Double
+Dim Shared 工作中(1 To 3) As Boolean = False
+
+
+'[Form1]事件 : 窗口完全显示后。
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
+Sub Form1_Shown(hWndForm As hWnd, UserData As Integer)
+   Dim i As Integer
+   For i = 1 To 3
+    ' 初始化总时间，分钟转毫秒 + 秒转毫秒
+    总时间(i) = 初始倒计时(i, 1) * 60 * 1000 + 初始倒计时(i, 2) * 1000
+    ' 初始化倒计时显示
+    倒计时(i-1).Caption = Format(初始倒计时(i , 1), "00") & ":" & Format(初始倒计时(i, 2), "00")
+   Next i 
+
+End Sub
+
+'[Form1.Timer1]事件 : 定时器
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+''         本控件为功能控件，就是无窗口，无显示，只有功能。如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 
+'wTimerID  定时器ID，区分不同定时器的编号
+Sub Form1_Timer1_WM_Timer(hWndForm As hWnd, wTimerID As Long)
+   Dim i As Integer
+   Dim 消耗时间(1 To 3) As Double
+
+
+End Sub
+
+'[Form1.启动]事件 : 单击
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub Form1_启动_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
+   '控件索引ControlIndex都是0开始，我声明的变量的索引idx都是1开始
+   Dim idx As Integer
+   idx = ControlIndex + 1
+   ' 切换工作状态
+   If 工作中(idx) = False Then
+      工作中(idx) = True
+      启动(ControlIndex).Caption = "重置"
+      启动(ControlIndex).BackColor = RGB(255, 0, 0) ' 红色
+      开始点(idx) = Timer
+   Else
+      工作中(idx) = False
+      启动(ControlIndex).Caption = "开始"
+      启动(ControlIndex).BackColor = RGB(255, 255, 255)      ' 白色
+   End If
+   ' 只要有一个倒计时在工作，就开启定时器
+   Timer1.Enabled = (工作中(1) Or 工作中(2) Or 工作中(3))
+End Sub
+
+
+
+
+ 

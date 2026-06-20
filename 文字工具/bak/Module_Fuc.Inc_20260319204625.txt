@@ -1,0 +1,109 @@
+﻿' 全局变量
+DimP g_hHook As HWINEVENTHOOK
+DimP g_hWndCurrent As HWND      ' 当前前台窗口
+DimP g_hWndLast As HWND          ' 上一次的前台窗口（即我们需要的原窗口）
+
+' WinEvent 回调函数
+Sub MyWinEventProc stdcall(ByVal hHook As HWINEVENTHOOK, ByVal Event As DWORD, ByVal hwnd As hwnd, ByVal idObject As Long, ByVal idChild As Long, ByVal dwEventThread As DWORD, ByVal dwmsEventTime As DWORD)
+   If Event = &H3 Then ' EVENT_SYSTEM_FOREGROUND
+      ' 更新当前窗口为新窗口
+      g_hWndLast = g_hWndCurrent
+      g_hWndCurrent = hwnd
+   End If
+End Sub
+
+
+' 根据索引获取左右符号（索引从1开始，对应你的符号对数组）
+Function GetSymbolPair(idx As Integer, ByRef leftSym As String, ByRef rightSym As String) As Boolean
+    Select Case idx
+        Case 1  ' 中文双引号
+            leftSym = "“"
+            rightSym = "”"
+        Case 2  ' 英文双引号
+            leftSym = """"
+            rightSym = """"
+        Case 3  ' 中文单引号
+            leftSym = "‘"
+            rightSym = "’"
+        Case 4  ' 英文单引号
+            leftSym = "'"
+            rightSym = "'"
+        Case 5  ' 中文书名号
+            leftSym = "《"
+            rightSym = "》"
+        Case 6  ' 英文尖括号
+            leftSym = "<"
+            rightSym = ">"
+        Case 7  ' 中文方括号
+            leftSym = "【"
+            rightSym = "】"
+        Case 8  ' 英文方括号
+            leftSym = "["
+            rightSym = "]"
+        Case 9  ' 中文花括号「」
+            leftSym = "「"
+            rightSym = "」"
+        Case 10 ' 英文花括号
+            leftSym = "{"
+            rightSym = "}"
+        Case 11 ' 中文圆括号（）
+            leftSym = "（"
+            rightSym = "）"
+        Case 12 ' 英文圆括号
+            leftSym = "("
+            rightSym = ")"
+        Case Else
+            Return False
+    End Select
+    Return True
+End Function
+
+Sub InsertSymbolPair(idx As Integer)
+    Dim leftSym As String, rightSym As String
+    If Not GetSymbolPair(idx, leftSym, rightSym) Then Exit Sub
+
+    If g_hWndLast = 0 Then
+        MsgBox "未能获取到原窗口，请确保已从其他程序切换到本程序。"
+        Exit Sub
+    End If
+
+    ' 1. 激活原窗口
+    SetForegroundWindow(g_hWndLast)
+    Sleep(100)
+    
+    Print "激活窗口 " & g_hWndLast
+
+    ' 2. 获取真正拥有焦点的子窗口（编辑框）
+    Dim hFocus As HWND
+    hFocus = GetFocus()
+    Print "焦点的子窗口" & hFocus
+    If hFocus = 0 Then
+        MsgBox "无法获取目标编辑框句柄。"
+        Exit Sub
+    End If
+
+    ' 3. 发送 WM_COPY 到焦点子窗口
+    SendMessage(hFocus, WM_COPY, 0, 0)
+    Sleep(50)
+
+    ' 4. 读取剪贴板
+    Dim selectedText As String = FF_ClipboardGetText()
+    Print "读取剪贴板  '" & selectedText & "'"
+
+    If selectedText = "" Then
+        MsgBox "复制失败，请检查目标窗口是否支持复制。"
+        Exit Sub
+    End If
+
+    ' 5. 构建新文本并放入剪贴板
+    Dim newText As String
+    newText = leftSym & selectedText & rightSym
+    FF_ClipboardSetText(newText)
+    Sleep(50)
+    
+    Print "新文本" & newText
+
+    ' 6. 发送 WM_PASTE 到焦点子窗口
+    SendMessage(hFocus, WM_PASTE, 0, 0)
+    Sleep(100)
+End Sub

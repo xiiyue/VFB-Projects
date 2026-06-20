@@ -1,0 +1,268 @@
+﻿
+' 加载周期任务
+Function LoadPeriodicTasks(periodicTasks() As PeriodicTask, filePath As String) As Long
+    Dim hFile As Long = FreeFile
+    Dim fileContent As String
+    Dim jsonRoot As cJSON Ptr
+    Dim jsonItem As cJSON Ptr
+    Dim taskCount As Long
+    Dim i As Long
+    
+    ' 尝试打开文件
+    If Not FileExists(filePath) Then
+        ' 文件不存在，返回空数组
+        ReDim periodicTasks(0)
+        Return 0
+    End If
+    
+    Open filePath For Binary As #hFile
+    fileContent = Space(Lof(hFile))
+    Get #hFile, , fileContent
+    Close #hFile
+    
+    ' 解析 JSON
+    jsonRoot = cJSON_Parse(fileContent)
+    If jsonRoot = 0 Then
+        ' 解析失败，返回空数组
+        ReDim periodicTasks(0)
+        Return 0
+    End If
+    
+    ' 获取数组大小
+    taskCount = cJSON_GetArraySize(jsonRoot)
+    ReDim periodicTasks(taskCount - 1)
+    
+    ' 遍历数组
+    For i = 0 To taskCount - 1
+        jsonItem = cJSON_GetArrayItem(jsonRoot, i)
+        With periodicTasks(i)
+            .Name = *cJSON_GetObjectItem(jsonItem, "name")->valuestring
+            .createTime = cJSON_GetObjectItem(jsonItem, "createTime")->valuedouble
+            .PeriodType = cJSON_GetObjectItem(jsonItem, "periodType")->valueint
+            .currentPeriod = cJSON_GetObjectItem(jsonItem, "currentPeriod")->valuedouble
+            .nextPeriod = cJSON_GetObjectItem(jsonItem, "nextPeriod")->valuedouble
+            .completed = cJSON_GetObjectItem(jsonItem, "completed")->valueint <> 0
+            .completionCount = cJSON_GetObjectItem(jsonItem, "completionCount")->valueint
+            .onList = cJSON_GetObjectItem(jsonItem, "onList")->valueint <> 0
+            .tempStatus = cJSON_GetObjectItem(jsonItem, "tempStatus")->valueint <> 0
+            .subtasks = *cJSON_GetObjectItem(jsonItem, "subtasks")->valuestring
+        End With
+    Next i
+    
+    cJSON_Delete(jsonRoot)
+    Return taskCount
+End Function
+
+
+' 保存周期任务
+Sub SavePeriodicTasks(periodicTasks() As PeriodicTask, filePath As String)
+    Dim hFile As Long = FreeFile
+    Dim jsonRoot As cJSON Ptr
+    Dim jsonItem As cJSON Ptr
+    Dim jsonStr As String
+    Dim i As Long
+    
+    ' 创建 JSON 数组
+    jsonRoot = cJSON_CreateArray()
+    
+    ' 遍历任务数组
+    For i = LBound(periodicTasks) To UBound(periodicTasks)
+        jsonItem = cJSON_CreateObject()
+        With periodicTasks(i)
+            cJSON_AddStringToObject(jsonItem, "name", .Name)
+            cJSON_AddNumberToObject(jsonItem, "createTime", .createTime)
+            cJSON_AddNumberToObject(jsonItem, "periodType", .PeriodType)
+            cJSON_AddNumberToObject(jsonItem, "currentPeriod", .currentPeriod)
+            cJSON_AddNumberToObject(jsonItem, "nextPeriod", .nextPeriod)
+            cJSON_AddBoolToObject(jsonItem, "completed", .completed)
+            cJSON_AddNumberToObject(jsonItem, "completionCount", .completionCount)
+            cJSON_AddBoolToObject(jsonItem, "onList", .onList)
+            cJSON_AddBoolToObject(jsonItem, "tempStatus", .tempStatus)
+            cJSON_AddStringToObject(jsonItem, "subtasks", .subtasks)
+        End With
+        cJSON_AddItemToArray(jsonRoot, jsonItem)
+    Next i
+    
+    ' 转换为字符串并保存
+    jsonStr = *cJSON_Print(jsonRoot)
+    Open filePath For Output As #hFile
+    Print #hFile, jsonStr
+    Close #hFile
+    
+    ' 释放内存
+    cJSON_Delete(jsonRoot)
+    cJSON_free(jsonStr)
+End Sub
+
+'加载延期任务
+Function LoadDeferredTasks(deferredTasks() As DeferredTask, filePath As String) As Long
+    Dim hFile As Long = FreeFile
+    Dim fileContent As String
+    Dim jsonRoot As cJSON Ptr
+    Dim jsonItem As cJSON Ptr
+    Dim taskCount As Long
+    Dim i As Long
+    
+    If Not FileExists(filePath) Then
+        ReDim deferredTasks(0)
+        Return 0
+    End If
+    
+    Open filePath For Binary As #hFile
+    fileContent = Space(Lof(hFile))
+    Get #hFile, , fileContent
+    Close #hFile
+    
+    jsonRoot = cJSON_Parse(fileContent)
+    If jsonRoot = 0 Then
+        ReDim deferredTasks(0)
+        Return 0
+    End If
+    
+    taskCount = cJSON_GetArraySize(jsonRoot)
+    ReDim deferredTasks(taskCount - 1)
+    
+    For i = 0 To taskCount - 1
+        jsonItem = cJSON_GetArrayItem(jsonRoot, i)
+        With deferredTasks(i)
+            .name = *cJSON_GetObjectItem(jsonItem, "name")->valuestring
+            .createTime = cJSON_GetObjectItem(jsonItem, "createTime")->valuedouble
+            .target = cJSON_GetObjectItem(jsonItem, "target")->valuedouble
+            .onList = cJSON_GetObjectItem(jsonItem, "onList")->valueint <> 0
+            .tempStatus = cJSON_GetObjectItem(jsonItem, "tempStatus")->valueint <> 0
+            .subtasks = *cJSON_GetObjectItem(jsonItem, "subtasks")->valuestring
+        End With
+    Next i
+    
+    cJSON_Delete(jsonRoot)
+    Return taskCount
+End Function
+
+
+' 保存延期任务
+Sub SaveDeferredTasks(deferredTasks() As DeferredTask, filePath As String)
+    Dim hFile As Long = FreeFile
+    Dim jsonRoot As cJSON Ptr
+    Dim jsonItem As cJSON Ptr
+    Dim jsonStr As String
+    Dim i As Long
+    
+    jsonRoot = cJSON_CreateArray()
+    
+    For i = LBound(deferredTasks) To UBound(deferredTasks)
+        jsonItem = cJSON_CreateObject()
+        With deferredTasks(i)
+            cJSON_AddStringToObject(jsonItem, "name", .name)
+            cJSON_AddNumberToObject(jsonItem, "createTime", .createTime)
+            cJSON_AddNumberToObject(jsonItem, "target", .target)
+            cJSON_AddBoolToObject(jsonItem, "onList", .onList)
+            cJSON_AddBoolToObject(jsonItem, "tempStatus", .tempStatus)
+            cJSON_AddStringToObject(jsonItem, "subtasks", .subtasks)
+        End With
+        cJSON_AddItemToArray(jsonRoot, jsonItem)
+    Next i
+    
+    jsonStr = *cJSON_Print(jsonRoot)
+    Open filePath For Output As #hFile
+    Print #hFile, jsonStr
+    Close #hFile
+    
+    cJSON_Delete(jsonRoot)
+    cJSON_free(jsonStr)
+End Sub
+
+
+' 加载普通任务
+Function LoadRegularTasks(regularTasks() As RegularTask, filePath As String) As Long
+    Dim hFile As Long = FreeFile
+    Dim fileContent As String
+    Dim jsonRoot As cJSON Ptr
+    Dim jsonItem As cJSON Ptr
+    Dim taskCount As Long
+    Dim i As Long
+    
+    If Not FileExists(filePath) Then
+        ReDim regularTasks(0)
+        Return 0
+    End If
+    
+    Open filePath For Binary As #hFile
+    fileContent = Space(Lof(hFile))
+    Get #hFile, , fileContent
+    Close #hFile
+    
+    jsonRoot = cJSON_Parse(fileContent)
+    If jsonRoot = 0 Then
+        ReDim regularTasks(0)
+        Return 0
+    End If
+    
+    taskCount = cJSON_GetArraySize(jsonRoot)
+    ReDim regularTasks(taskCount - 1)
+    
+    For i = 0 To taskCount - 1
+        jsonItem = cJSON_GetArrayItem(jsonRoot, i)
+        With regularTasks(i)
+            .name = *cJSON_GetObjectItem(jsonItem, "name")->valuestring
+            .createTime = cJSON_GetObjectItem(jsonItem, "createTime")->valuedouble
+            .taskTime = cJSON_GetObjectItem(jsonItem, "taskTime")->valuedouble
+            .onList = cJSON_GetObjectItem(jsonItem, "onList")->valueint <> 0
+            .tempStatus = cJSON_GetObjectItem(jsonItem, "tempStatus")->valueint <> 0
+            .subtasks = *cJSON_GetObjectItem(jsonItem, "subtasks")->valuestring
+        End With
+    Next i
+    
+    cJSON_Delete(jsonRoot)
+    Return taskCount
+End Function
+
+
+' 保存普通任务
+Sub SaveRegularTasks(regularTasks() As RegularTask, filePath As String)
+    Dim hFile As Long = FreeFile
+    Dim jsonRoot As cJSON Ptr
+    Dim jsonItem As cJSON Ptr
+    Dim jsonStr As String
+    Dim i As Long
+    
+    jsonRoot = cJSON_CreateArray()
+    
+    For i = LBound(regularTasks) To UBound(regularTasks)
+        jsonItem = cJSON_CreateObject()
+        With regularTasks(i)
+            cJSON_AddStringToObject(jsonItem, "name", .name)
+            cJSON_AddNumberToObject(jsonItem, "createTime", .createTime)
+            cJSON_AddNumberToObject(jsonItem, "taskTime", .taskTime)
+            cJSON_AddBoolToObject(jsonItem, "onList", .onList)
+            cJSON_AddBoolToObject(jsonItem, "tempStatus", .tempStatus)
+            cJSON_AddStringToObject(jsonItem, "subtasks", .subtasks)
+        End With
+        cJSON_AddItemToArray(jsonRoot, jsonItem)
+    Next i
+    
+    jsonStr = *cJSON_Print(jsonRoot)
+    Open filePath For Output As #hFile
+    Print #hFile, jsonStr
+    Close #hFile
+    
+    cJSON_Delete(jsonRoot)
+    cJSON_free(jsonStr)
+End Sub
+
+' 定义任务数组
+DimP periodicTasks() As PeriodicTask
+DimP deferredTasks() As DeferredTask
+DimP regularTasks() As RegularTask
+
+' 定义文件路径
+DimP periodicFile As String = App.Path & "\data\periodic_tasks.json"
+DimP deferredFile As String = App.Path & "\data\deferred_tasks.json"
+DimP regularFile As String = App.Path & "\data\regular_tasks.json"
+
+' 确保 data 文件夹存在
+If Not DirExists(App.Path & "\data") Then MkDir App.Path & "\data"
+
+' 加载数据
+LoadPeriodicTasks(periodicTasks(), periodicFile)
+LoadDeferredTasks(deferredTasks(), deferredFile)
+LoadRegularTasks(regularTasks(), regularFile)

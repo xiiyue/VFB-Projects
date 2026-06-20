@@ -1,0 +1,1 @@
+"D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\fbc32.exe" -i "D:\XYDrive\IDE\VFB\Control" -i "D:\XYDrive\IDE\VFB\Compile\expand\inc" -p "D:\XYDrive\IDE\VFB\Compile\expand\lib\win32" -x "ÎÄ×Ö¹¤¾ß.exe" CODEGEN_1j09yxai_MAIN.bas -s gui -v 1j09yxai_RESOURCE.rc > 1j09yxai_compile_log.txt 2>&1

@@ -1,0 +1,224 @@
+﻿' 全局变量
+DimP g_hHook As HWINEVENTHOOK
+DimP g_hWndCurrent As HWND      ' 当前前台窗口
+DimP g_hWndLast As HWND          ' 上一次的前台窗口（即我们需要的原窗口）
+
+' WinEvent 回调函数
+Sub MyWinEventProc stdcall(ByVal hHook As HWINEVENTHOOK, ByVal Event As DWORD, ByVal hwnd As hwnd, ByVal idObject As Long, ByVal idChild As Long, ByVal dwEventThread As DWORD, ByVal dwmsEventTime As DWORD)
+   If Event = &H3 Then ' EVENT_SYSTEM_FOREGROUND
+      ' 更新当前窗口为新窗口
+      g_hWndLast = g_hWndCurrent
+      g_hWndCurrent = hwnd
+   End If
+End Sub
+
+' ============================================
+' 获取选中的文本，return 选中的文本
+' ============================================
+Function GetSelectedText() As String
+    If g_hWndLast = 0 Then
+        MsgBox "未能获取到原窗口，请确保已从其他程序切换到本程序。"
+        Return ""
+    End If
+
+    ' 激活原窗口
+    SetForegroundWindow(g_hWndLast)
+    Sleep(100)
+
+    ' 附加线程输入，获取焦点控件句柄
+    Dim tid As Long = GetWindowThreadProcessId(g_hWndLast, 0)
+    AttachThreadInput(GetCurrentThreadId(), tid, True)
+    Dim hFocus As HWND = GetFocus()
+    AttachThreadInput(GetCurrentThreadId(), tid, False)
+    
+    If hFocus = 0 Then
+        MsgBox "无法获取目标编辑框句柄。"
+        Return ""
+    End If
+
+    ' 模拟 Ctrl+C 复制
+    keybd_event(VK_CONTROL, 0, 0, 0)
+    keybd_event(Asc("C"), 0, 0, 0)
+    keybd_event(Asc("C"), 0, KEYEVENTF_KEYUP, 0)
+    keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0)
+    Sleep(100)
+
+    ' 读取剪贴板
+    Dim selectedText As String = AfxGetClipboardText()
+    If selectedText = "" Then
+        MsgBox "复制失败，请检查目标窗口是否支持复制。"
+        Return ""
+    End If
+
+    Return selectedText
+End Function
+
+' ============================================
+' 处理结果发送回去，参数为新文本，没有return
+' ============================================
+Sub ReplaceSelectedText(newText As String)
+    ' 将新文本写入剪贴板
+    AfxSetClipboardText(newText)
+    Sleep(50)
+
+    ' 模拟 Ctrl+V 粘贴
+    keybd_event(VK_CONTROL, 0, 0, 0)
+    keybd_event(Asc("V"), 0, 0, 0)
+    keybd_event(Asc("V"), 0, KEYEVENTF_KEYUP, 0)
+    keybd_event(VK_CONTROL, 0, KEYEVENTF_KEYUP, 0)
+    Sleep(100)
+End Sub
+
+' ============================================
+' 获取选中文本GetSelectedText → 处理(原文本) → 发送ReplaceSelectedText
+' ============================================
+Sub ProcessSelectedText(processFunc As Function(ByVal txt As String) As String)
+    Dim originalText As String = GetSelectedText()
+    If originalText = "" Then Exit Sub
+
+    Dim newText As String = processFunc(originalText)
+    ReplaceSelectedText(newText)
+    Form1.Label1.Caption = "原文：" & originalText & "新文：" & newText
+End Sub
+' ============================================
+' 获取选中文本GetSelectedText → 处理(原文本,参数) → 发送ReplaceSelectedText
+' ============================================
+Type ProcessFuncWithInt As Function(ByVal txt As String, ByVal i As Integer) As String
+Sub ProcessSelectedTextWithInt(processFunc As ProcessFuncWithInt, i As Integer)
+    Dim originalText As String = GetSelectedText()
+    If originalText = "" Then Exit Sub
+
+    Dim newText As String = processFunc(originalText, i)
+    If newText = originalText Then
+        Exit Sub
+    End If
+    ReplaceSelectedText(newText)
+End Sub
+
+
+' 符号对的辅助函数
+Function GetSymbolPair(idx As Integer, ByRef leftSym As String, ByRef rightSym As String) As Boolean
+    Select Case idx
+        Case 1  ' 中文双引号
+            leftSym = "“"
+            rightSym = "”"
+        Case 2  ' 英文双引号
+            leftSym = """"
+            rightSym = """"
+        Case 3  ' 中文单引号
+            leftSym = "‘"
+            rightSym = "’"
+        Case 4  ' 英文单引号
+            leftSym = "'"
+            rightSym = "'"
+        Case 5  ' 中文书名号
+            leftSym = "《"
+            rightSym = "》"
+        Case 6  ' 英文尖括号
+            leftSym = "<"
+            rightSym = ">"
+        Case 7  ' 中文方括号
+            leftSym = "【"
+            rightSym = "】"
+        Case 8  ' 英文方括号
+            leftSym = "["
+            rightSym = "]"
+        Case 9  ' 中文花括号「」
+            leftSym = "「"
+            rightSym = "」"
+        Case 10 ' 英文花括号
+            leftSym = "{"
+            rightSym = "}"
+        Case 11 ' 中文圆括号（）
+            leftSym = "（"
+            rightSym = "）"
+        Case 12 ' 英文圆括号
+            leftSym = "("
+            rightSym = ")"
+        Case Else
+            Return False
+    End Select
+    Return True
+End Function
+
+' 符号对的实现
+Function InsertSymbolPair(oldtext As WString, idx As Integer) As String
+   Dim leftSym As String, rightSym As String
+   If Not GetSymbolPair(idx, leftSym, rightSym) Then
+      Return oldtext ' 获取失败时，返回原文本，不做修改
+   End If
+   Return leftSym & oldtext & rightSym
+End Function
+
+' 简繁转换的辅助函数：ANSI 字符串 -> UTF-16 宽字符串
+Function AnsiToWide(ansiStr As String) As WString Ptr
+    Dim As Integer lenW = MultiByteToWideChar(CP_ACP, 0, StrPtr(ansiStr), -1, NULL, 0)
+    If lenW = 0 Then Return NULL
+    Dim As WString Ptr wstr = Allocate(lenW * SizeOf(WString))
+    MultiByteToWideChar(CP_ACP, 0, StrPtr(ansiStr), -1, wstr, lenW)
+    Return wstr
+End Function
+
+' 简繁转换的辅助函数：UTF-16 宽字符串 -> ANSI 字符串
+Function WideToAnsi(wstr As WString Ptr) As String
+    If wstr = NULL Then Return ""
+    Dim As Integer lenA = WideCharToMultiByte(CP_ACP, 0, wstr, -1, NULL, 0, NULL, NULL)
+    If lenA = 0 Then Return ""
+    Dim As String ansiStr = Space(lenA - 1)   ' 去掉末尾的空字符
+    WideCharToMultiByte(CP_ACP, 0, wstr, -1, StrPtr(ansiStr), lenA, NULL, NULL)
+    Return ansiStr
+End Function
+
+
+
+' 自动检测并转换简繁
+Function ConvertChinese(oldtext As String) As String
+    If Len(oldtext) = 0 Then Return ""
+
+    ' 1. 转换为宽字符串
+    Dim As WString Ptr ws = AnsiToWide(oldtext)
+    If ws = NULL Then Return ""
+    Dim As Integer srcLen = lstrlenW(ws)   ' 宽字符个数
+
+    ' 2. 获取转换为简体、繁体的目标长度（宽字符数）
+    Dim As Integer simpLen = LCMapStringW(LOCALE_SYSTEM_DEFAULT, LCMAP_SIMPLIFIED_CHINESE, _
+        ws, srcLen, NULL, 0)
+    Dim As Integer tradLen = LCMapStringW(LOCALE_SYSTEM_DEFAULT, LCMAP_TRADITIONAL_CHINESE, _
+        ws, srcLen, NULL, 0)
+
+    If simpLen = 0 Or tradLen = 0 Then
+        Deallocate(ws)
+        Return ""   ' 转换失败，可能系统不支持
+    End If
+
+    ' 3. 分配缓冲区并执行转换
+    Dim As WString Ptr simpText = Allocate((simpLen + 1) * SizeOf(WString))
+    Dim As WString Ptr tradText = Allocate((tradLen + 1) * SizeOf(WString))
+
+    LCMapStringW(LOCALE_SYSTEM_DEFAULT, LCMAP_SIMPLIFIED_CHINESE, _
+        ws, srcLen, simpText, simpLen)
+    LCMapStringW(LOCALE_SYSTEM_DEFAULT, LCMAP_TRADITIONAL_CHINESE, _
+        ws, srcLen, tradText, tradLen)
+
+    ' 4. 比较原文本与两个转换结果，确定方向
+    Dim As Integer sameWithSimp = 0, sameWithTrad = 0
+    For i As Integer = 0 To srcLen - 1
+        If ws[i] = simpText[i] Then sameWithSimp += 1
+        If ws[i] = tradText[i] Then sameWithTrad += 1
+    Next
+
+    ' 5. 根据相似度返回另一种形式
+    Dim As WString Ptr resultW = NULL
+    If sameWithSimp >= sameWithTrad Then
+        resultW = tradText   ' 原文本更像简体 → 转为繁体
+    Else
+        resultW = simpText   ' 原文本更像繁体 → 转为简体
+    End If
+
+    ' 6. 转换回 ANSI 字符串并释放内存
+    Dim As String result = WideToAnsi(resultW)
+    Deallocate(ws)
+    Deallocate(simpText)
+    Deallocate(tradText)
+    Return result
+End Function

@@ -1,0 +1,253 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.10
+Locked=0
+
+[Form]
+Name=Form1
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_THICKFRAME,WS_CAPTION,WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_VISIBLE,WS_EX_WINDOWEDGE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_POPUP,WS_SIZEBOX
+Style=3 - 常规窗口
+Icon=
+Caption=倍半器
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=278
+Height=225
+TopMost=False
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=True
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[TextBox]
+Name=Text1
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=Text1
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,9,0
+TextAlign=0 - 左对齐
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=10
+Top=20
+Width=240
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[Label]
+Name=Label1
+Help=
+Index=0
+Style=0 - 无边框
+Caption=半
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,16
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=10
+Top=80
+Width=100
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=1
+Style=0 - 无边框
+Caption=倍
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,16
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=10
+Top=140
+Width=100
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command1
+Help=
+Index=0
+Caption=复制
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,16
+Left=140
+Top=70
+Width=100
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command1
+Help=
+Index=1
+Caption=复制
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,16
+Left=140
+Top=140
+Width=100
+Height=40
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+'这是标准的工程模版，你也可做自己的模版。
+'写好工程，复制全部文件到VFB软件文件夹里【template】里即可，子文件夹名为 VFB新建工程里显示的名称
+'快去打造属于你自己的工程模版吧。
+
+'[Form1.Command1]事件 : 单击
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub Form1_Command1_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
+    Dim textToCopy As String
+
+    ' 根据按钮索引获取对应标签的 Caption
+    Select Case ControlIndex
+        Case 0
+            textToCopy = Label1(0).Caption
+        Case 1
+            textToCopy = Label1(1).Caption
+        Case Else
+            Exit Sub   ' 忽略其他索引（如果有）
+    End Select
+
+    ' 若标签内容非空则复制，否则可忽略或提示
+    If textToCopy <> "" Then
+        AfxSetClipboardText(textToCopy)
+    End If
+
+End Sub
+
+'[Form1.Text1]事件 : 文本已经被修改（修改前用 EN_UPDATE
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub Form1_Text1_EN_Change(hWndForm As hWnd, hWndControl As hWnd)
+    Dim inputText As String
+    Dim numValue As Double
+    Dim halfResult As Double
+    Dim doubleResult As Double
+
+    ' 1. 读取文本框文本
+    inputText = Text1.Text
+
+    ' 若为空则清空标签并退出（避免显示0）
+    If inputText = "" Then
+        Label1(0).Caption = ""
+        Label1(1).Caption = ""
+        Exit Sub
+    End If
+
+    ' 转为数值（支持小数）
+    numValue = Val(inputText)
+
+    ' 2. 除以2 → 显示在 Label1(0)，并复制到剪贴板
+    halfResult = numValue / 2
+    Label1(0).Caption = Str(halfResult)                ' 显示结果
+    AfxSetClipboardText(Str(halfResult))               
+
+    ' 3. 乘以2 → 显示在 Label1(1)
+    doubleResult = numValue * 2
+    Label1(1).Caption = Str(doubleResult)
+
+End Sub
+
+
+
+
+
+
+

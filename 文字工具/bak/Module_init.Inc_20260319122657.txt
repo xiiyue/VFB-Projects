@@ -1,0 +1,26 @@
+﻿
+DimP 符号对(...) As String = {"中“”", """", "中‘’", "''", "中《》", "<>", "中【】", "[]", "中「」", "{}", "中（）", "()"}
+
+'初始化 Combo_符号对
+Sub InitCombo_符号对()
+   'Form1.Combo_符号对.AddItem "符号对->《》" ' 提示文字，选中无功能
+   'Form1.Combo_符号对.AddItem "中“”"
+   'Form1.Combo_符号对.AddItem """"
+   'Form1.Combo_符号对.AddItem "中‘’"
+   'Form1.Combo_符号对.AddItem "''"
+   'Form1.Combo_符号对.AddItem "中《》"
+   'Form1.Combo_符号对.AddItem "<>"
+   'Form1.Combo_符号对.AddItem "中【】"
+   'Form1.Combo_符号对.AddItem "[]"
+   'Form1.Combo_符号对.AddItem "中「」"
+   'Form1.Combo_符号对.AddItem "{}"
+   'Form1.Combo_符号对.AddItem "中（）"
+   'Form1.Combo_符号对.AddItem "()"
+   Dim i As Integer 
+   For i = 0 To UBound(符号对)
+      Form1.Combo_符号对.AddItem 符号对(i)
+   Next
+
+   Form1.Combo_符号对.ListIndex = 0
+End Sub
+

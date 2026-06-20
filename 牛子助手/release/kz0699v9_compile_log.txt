@@ -1,0 +1,12 @@
+﻿FreeBASIC Compiler - Version 1.10.1 (2023-12-24), built for win32 (32bit)
+Copyright (C) 2004-2023 The FreeBASIC development team.
+开始编译时间:2026-03-18 21:50:16 , 解析代码:2.3秒 , 编译代码:1.3秒 , 总用时间:3.7秒
+目标：win32, 686, 32bit
+后端：gas
+编译：CODEGEN_kz0699v9_MAIN.bas -o CODEGEN_kz0699v9_MAIN.asm (主模块)
+CODEGEN_kz0699v9_Form1_FORM.inc(743) warning 1(2): 将非指针变量作为指针传递，是参数 1 of CLIENTTOSCREEN()
+CODEGEN_kz0699v9_Form1_FORM.inc(939) warning 2(2): 将指针变量作为非指针传递，是参数 1 (hWndFrom) of STARTDRAG()
+CODEGEN_kz0699v9_Form1_FORM.inc(950) warning 38(1): 布尔值和非布尔混合可能会发生逻辑问题
+组件：D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\bin\win32\as.exe --32 --strip-local-absolute "CODEGEN_kz0699v9_MAIN.asm" -o "CODEGEN_kz0699v9_MAIN.o"
+资源：D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\bin\win32\GoRC.exe /ni /nw /o /fo "kz0699v9_RESOURCE.obj" "kz0699v9_RESOURCE.rc"
+链接：D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\bin\win32\ld.exe -m i386pe -o "牛子助手.exe" -subsystem windows -T "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\fbextra.x" --stack 1048576,1048576 -s -L "D:\XYDrive\IDE\VFB\Compile\expand\lib\win32" -L "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32" -L "." "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\crt2.o" "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\crtbegin.o" "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\fbrt0.o" "CODEGEN_kz0699v9_MAIN.o" "kz0699v9_RESOURCE.obj" "-(" -lddraw -ldxguid -lkernel32 -lgdi32 -lmsimg32 -luser32 -lversion -ladvapi32 -limm32 -luuid -lole32 -loleaut32 -lgdiplus -lcomctl32 -lpsapi -lshell32 -lcomdlg32 -lshlwapi -luxtheme -lfb -lgcc -lmsvcrt -lmingw32 -lmingwex -lmoldname -lgcc_eh "-)" "D:\XYDrive\IDE\VFB\Compile\FreeBASIC-1.10.1-winlibs-gcc-9.3.0\lib\win32\crtend.o" 

@@ -1,0 +1,218 @@
+﻿' ========== 测试保存功能 ==========
+Sub TestSave()
+    Dim i As Long
+    Dim j As Long
+
+    Print "=== 测试保存功能 ==="
+    
+    ' ---------- 1. 准备测试数据 ----------
+    Print "创建测试数据..."
+    
+    ' 周期任务
+    ReDim periodicTasks(2)
+    With periodicTasks(0)
+        .Name = "每日锻炼"
+        .createTime = Now
+        .PeriodType = 1
+        .currentPeriod = Now
+        .nextPeriod = Now + 1
+        .completed = False
+        .completionCount = 0
+        .onList = True
+        .tempStatus = False
+        ReDim .subtasks(2, 1)
+        .subtasks(0, 0) = "1"
+        .subtasks(0, 1) = "2"
+        .subtasks(1, 0) = "跑步"
+        .subtasks(1, 1) = "0"
+        .subtasks(2, 0) = "拉伸"
+        .subtasks(2, 1) = "0"
+    End With
+    With periodicTasks(1)
+        .Name = "周会准备"
+        .createTime = Now - 3
+        .PeriodType = 2
+        .currentPeriod = Now - 3
+        .nextPeriod = Now + 4
+        .completed = False
+        .completionCount = 1
+        .onList = True
+        .tempStatus = False
+        ReDim .subtasks(0, 1)
+        .subtasks(0, 0) = "0"
+        .subtasks(0, 1) = "0"
+    End With
+    With periodicTasks(2)
+        .Name = "年度体检"
+        .createTime = Now - 30
+        .PeriodType = 4
+        .currentPeriod = Now - 30
+        .nextPeriod = Now + 335
+        .completed = True
+        .completionCount = 3
+        .onList = False
+        .tempStatus = True
+        ReDim .subtasks(1, 1)
+        .subtasks(0, 0) = "1"
+        .subtasks(0, 1) = "1"
+        .subtasks(1, 0) = "预约医院"
+        .subtasks(1, 1) = "1"
+    End With
+
+    ' 延期任务
+    ReDim deferredTasks(1)
+    With deferredTasks(0)
+        .name = "每日锻炼 (延期1次)"
+        .createTime = Now
+        .target = Now - 1
+        .onList = True
+        .tempStatus = False
+        ReDim .subtasks(0, 1)
+        .subtasks(0, 0) = "0"
+        .subtasks(0, 1) = "0"
+    End With
+    With deferredTasks(1)
+        .name = "周会准备 (延期2次)"
+        .createTime = Now - 2
+        .target = Now - 3
+        .onList = True
+        .tempStatus = True
+        ReDim .subtasks(1, 1)
+        .subtasks(0, 0) = "1"
+        .subtasks(0, 1) = "1"
+        .subtasks(1, 0) = "重写PPT"
+        .subtasks(1, 1) = "0"
+    End With
+
+    ' 普通任务
+    ReDim regularTasks(1)
+    With regularTasks(0)
+        .name = "交电费"
+        .createTime = Now - 5
+        .taskTime = Now + 2
+        .onList = True
+        .tempStatus = False
+        ReDim .subtasks(0, 1)
+        .subtasks(0, 0) = "0"
+        .subtasks(0, 1) = "0"
+    End With
+    With regularTasks(1)
+        .name = "买生日礼物"
+        .createTime = Now - 1
+        .taskTime = Now + 5
+        .onList = False
+        .tempStatus = False
+        ReDim .subtasks(2, 1)
+        .subtasks(0, 0) = "1"
+        .subtasks(0, 1) = "2"
+        .subtasks(1, 0) = "挑选"
+        .subtasks(1, 1) = "0"
+        .subtasks(2, 0) = "包装"
+        .subtasks(2, 1) = "0"
+    End With
+
+    Print "原始周期任务数: " & (UBound(periodicTasks) + 1)
+    Print "原始延期任务数: " & (UBound(deferredTasks) + 1)
+    Print "原始普通任务数: " & (UBound(regularTasks) + 1)
+
+    ' ---------- 2. 保存数据 ----------
+    Print "正在保存数据..."
+    SavePeriodicTasks()
+    SaveDeferredTasks()
+    SaveRegularTasks()
+    Print "保存完成。"
+
+    Print "测试保存结束。"
+End Sub
+
+' ========== 测试加载功能 ==========
+Sub TestLoad()
+    Dim i As Long
+    Dim j As Long
+
+    
+    Print "清空内存数组..."
+    Erase periodicTasks
+    Erase deferredTasks
+    Erase regularTasks
+    Print "数组已清空。"
+
+    Print "正在加载数据..."
+    LoadPeriodicTasks()
+    LoadDeferredTasks()
+    LoadRegularTasks()
+    Print "加载完成。"
+
+    ' ---------- 验证数据 ----------
+    Print "验证数据..."
+
+    ' 周期任务
+    Dim periodCount As Long = UBound(periodicTasks) + 1
+    Print "加载后周期任务数: " & periodCount
+    For i = 0 To periodCount - 1
+        With periodicTasks(i)
+            Print "  任务" & i & ": " & .Name
+            Print "    createTime: " & .createTime
+            Print "    PeriodType: " & .PeriodType
+            Print "    currentPeriod: " & .currentPeriod
+            Print "    nextPeriod: " & .nextPeriod
+            Print "    completed: " & .completed
+            Print "    completionCount: " & .completionCount
+            Print "    onList: " & .onList
+            Print "    tempStatus: " & .tempStatus
+            ' 子任务
+            Dim subFlag As Integer = Val(.subtasks(0, 0))
+            Dim subCount As Integer = Val(.subtasks(0, 1))
+            Print "    子任务标记: " & subFlag & ", 数量: " & subCount
+            If subFlag = 1 Then
+                For j = 1 To subCount
+                    Print "      子任务" & j & ": " & .subtasks(j, 0) & " -> " & .subtasks(j, 1)
+                Next
+            End If
+        End With
+    Next
+
+    ' 延期任务
+    Dim deferCount As Long = UBound(deferredTasks) + 1
+    Print "加载后延期任务数: " & deferCount
+    For i = 0 To deferCount - 1
+        With deferredTasks(i)
+            Print "  延期任务" & i & ": " & .name
+            Print "    createTime: " & .createTime
+            Print "    target: " & .target
+            Print "    onList: " & .onList
+            Print "    tempStatus: " & .tempStatus
+            Dim subFlag As Integer = Val(.subtasks(0, 0))
+            Dim subCount As Integer = Val(.subtasks(0, 1))
+            Print "    子任务标记: " & subFlag & ", 数量: " & subCount
+            If subFlag = 1 Then
+                For j = 1 To subCount
+                    Print "      子任务" & j & ": " & .subtasks(j, 0) & " -> " & .subtasks(j, 1)
+                Next
+            End If
+        End With
+    Next
+
+    ' 普通任务
+    Dim regularCount As Long = UBound(regularTasks) + 1
+    Print "加载后普通任务数: " & regularCount
+    For i = 0 To regularCount - 1
+        With regularTasks(i)
+            Print "  普通任务" & i & ": " & .name
+            Print "    createTime: " & .createTime
+            Print "    taskTime: " & .taskTime
+            Print "    onList: " & .onList
+            Print "    tempStatus: " & .tempStatus
+            Dim subFlag As Integer = Val(.subtasks(0, 0))
+            Dim subCount As Integer = Val(.subtasks(0, 1))
+            Print "    子任务标记: " & subFlag & ", 数量: " & subCount
+            If subFlag = 1 Then
+                For j = 1 To subCount
+                    Print "      子任务" & j & ": " & .subtasks(j, 0) & " -> " & .subtasks(j, 1)
+                Next
+            End If
+        End With
+    Next
+
+    Print "测试加载结束。"
+End Sub

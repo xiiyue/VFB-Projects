@@ -1,0 +1,37 @@
+﻿' 本模块是操作任务数组以及自定义功能
+#include Once "Afx/AfxTime.inc"
+
+' 辅助程序：刷新子任务列表（根据任务类型和索引）
+Sub RefreshSubtaskList(taskType As Integer, taskIndex As Integer)
+   任务管理.List_子任务.Clear
+   Dim count As Integer = 0
+   If taskType = 1 Then
+      count = Val(periodicTasks(taskIndex).subtasks(0, 1))
+      For i As Integer = 1 To count
+         任务管理.List_子任务.AddItem periodicTasks(taskIndex).subtasks(i, 0)
+      Next
+   Else
+      count = Val(regularTasks(taskIndex).subtasks(0, 1))
+      For i As Integer = 1 To count
+         任务管理.List_子任务.AddItem regularTasks(taskIndex).subtasks(i, 0)
+      Next
+   End If
+End Sub
+' 辅助程序：刷新全任务列表
+Sub RefreshFullTaskList()
+   ' 初始化 全任务List
+   Dim i        As Integer
+   Dim itemData As Long
+   List_全任务列表.Clear ' 清空原有内容
+   List_全任务列表.AddItem "=====普通任务=====", -1
+   For i = LBound(regularTasks) To UBound(regularTasks)
+      itemData = (2 Shl 16) Or i
+      List_全任务列表.AddItem regularTasks(i).Name, itemData
+   Next i
+   List_全任务列表.AddItem "=====周期任务=====", -1
+   For i = LBound(periodicTasks) To UBound(periodicTasks)
+      itemData = (1 Shl 16) Or i ' 高16位 保存 任务类型； 低16位 保存该任务的数组索引
+      List_全任务列表.AddItem periodicTasks(i).Name, itemData
+   Next i
+End Sub
+

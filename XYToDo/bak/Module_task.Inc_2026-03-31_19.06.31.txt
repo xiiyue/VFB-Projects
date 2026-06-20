@@ -1,0 +1,35 @@
+﻿' 周期任务
+Type PeriodicTask
+    Name As String
+    createTime As Double'本任务生成的时间，用now()
+    PeriodType As Integer ' 取值： 1=日, 2=周, 3=月, 4=年
+    currentPeriod As Double ' 本次循环的开始
+    nextPeriod As Double ' 本次循环的截止时间，下期的开始时间
+    completed As Integer
+    completionCount As Long
+    onList As Integer
+    tempStatus As Integer               
+    subtasks(Any,Any) As String  ' 二维动态数组：行0=元信息，行1..N=子任务；列0=任务名，列1=状态               
+End Type
+
+' 延期任务
+Type DeferredTask
+    Name As String
+    createTime As Double'本任务生成的时间，用now()
+    target As Double '主任务的createTime
+    onList As Integer' 生成延期任务时=1，再延期则+1，在这里充当延期次数的功能。
+    tempStatus As Integer            
+    subtasks(Any,Any) As String                 
+End Type
+
+' 普通任务，到达设定时间就显示，等待完成
+Type RegularTask
+    Name As String
+    createTime As Double
+    taskTime As Double
+    onList As Integer
+    tempStatus As Integer               
+    subtasks(Any,Any) As String               
+ End Type
+ 
+ 

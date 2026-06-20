@@ -1,0 +1,89 @@
+﻿' 事件常量
+Const EVENT_SYSTEM_FOREGROUND = &H3
+Const WINEVENT_OUTOFCONTEXT = &H0
+
+' 全局变量
+Dim Shared g_hHook As Long          ' 钩子句柄
+Dim Shared g_hWndLastForeground As Long   ' 上一次的前台窗口句柄
+
+
+
+
+
+' 根据索引获取左右符号（索引从1开始，对应你的符号对数组）
+Function GetSymbolPair(idx As Integer, ByRef leftSym As String, ByRef rightSym As String) As Boolean
+    Select Case idx
+        Case 1  ' 中文双引号
+            leftSym = "“"
+            rightSym = "”"
+        Case 2  ' 英文双引号
+            leftSym = """"
+            rightSym = """"
+        Case 3  ' 中文单引号
+            leftSym = "‘"
+            rightSym = "’"
+        Case 4  ' 英文单引号
+            leftSym = "'"
+            rightSym = "'"
+        Case 5  ' 中文书名号
+            leftSym = "《"
+            rightSym = "》"
+        Case 6  ' 英文尖括号
+            leftSym = "<"
+            rightSym = ">"
+        Case 7  ' 中文方括号
+            leftSym = "【"
+            rightSym = "】"
+        Case 8  ' 英文方括号
+            leftSym = "["
+            rightSym = "]"
+        Case 9  ' 中文花括号「」
+            leftSym = "「"
+            rightSym = "」"
+        Case 10 ' 英文花括号
+            leftSym = "{"
+            rightSym = "}"
+        Case 11 ' 中文圆括号（）
+            leftSym = "（"
+            rightSym = "）"
+        Case 12 ' 英文圆括号
+            leftSym = "("
+            rightSym = ")"
+        Case Else
+            Return False
+    End Select
+    Return True
+End Function
+
+' 插入符号对，idx 对应符号对索引（1开始）
+Sub InsertSymbolPair(idx As Integer)
+    Dim leftSym As String, rightSym As String
+    If Not GetSymbolPair(idx, leftSym, rightSym) Then Exit Sub
+
+    Dim selectedText As String
+    Dim newText As String
+
+    ' 1. 模拟 Ctrl+C 复制选中文本
+    KeyPressOR(17, 67)   ' 17 = Ctrl, 67 = C
+    Sleep(50)  ' 等待剪贴板更新
+
+    ' 2. 获取剪贴板文本
+    selectedText = FF_ClipboardGetText()
+
+    If selectedText <> "" Then
+        ' 有选中文本：用符号包围
+        newText = leftSym & selectedText & rightSym
+        FF_ClipboardSetText(newText)
+        KeyPressOR(17, 86)   ' Ctrl+V 粘贴
+    Else
+        ' 无选中文本：插入一对符号，并将光标置于中间
+        newText = leftSym & rightSym
+        FF_ClipboardSetText(newText)
+        KeyPressOR(17, 86)   ' 粘贴
+        Sleep(50)
+        ' 发送左箭头，将光标移到左符号后、右符号前（虚拟键码 37）
+        ' 如果 KeyPressOR 不支持第一个参数为0，可改用 keybd_event 直接发送
+        KeyPressOR(0, 37)    ' 左箭头
+    End If
+
+End Sub

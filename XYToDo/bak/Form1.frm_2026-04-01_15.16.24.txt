@@ -1,0 +1,106 @@
+﻿#VisualFreeBasic_Form#  Version=5.9.10
+Locked=0
+
+[Form]
+Name=主窗口
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_THICKFRAME,WS_CAPTION,WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_VISIBLE,WS_EX_WINDOWEDGE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_POPUP,WS_SIZEBOX
+Style=3 - 常规窗口
+Icon=
+Caption=XYToDo
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=614
+Height=442
+TopMost=False
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=True
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,25
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[TabControl]
+Name=TabControl1
+Help=
+Index=-1
+Style=0 - 标签在顶部
+Custom=3|0|今日||今天|0|任务管理||任务管理|0|历史记录||历史|0|
+FixedWidth=False
+Multiline=False
+Buttons=False
+NoScroll=False
+MultiSelect=False
+FlatButton=False
+IconLeft=False
+LabelLeft=False
+HotTrack=False
+FocusButton=False
+FocusNever=False
+ToolTips=False
+OwnDraw=False
+HeaderTopPadding=4
+HeaderSidePadding=4
+TabHeight=25
+TabWidth=50
+Enabled=True
+Visible=True
+Left=0
+Top=0
+Width=600
+Height=400
+Layout=5 - 宽度和高度
+MousePointer=0 - 默认
+Tag=
+Tab=False
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+
+[AllCode]
+'这是标准的工程模版，你也可做自己的模版。
+'写好工程，复制全部文件到VFB软件文件夹里【template】里即可，子文件夹名为 VFB新建工程里显示的名称
+'快去打造属于你自己的工程模版吧。
+'TestLoad()
+'TestSave()
+
+LoadTasks()
+ShowToday()
+
+'[主窗口]事件 : 即将关闭窗口，返回非0可阻止关闭
+'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+Function 主窗口_WM_Close(hWndForm As hWnd) As LResult
+   SaveTask()
+   Function = FALSE ' 返回 TRUE 阻止关闭窗口。
+End Function
+
+
+
+

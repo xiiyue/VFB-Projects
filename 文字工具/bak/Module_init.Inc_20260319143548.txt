@@ -1,0 +1,12 @@
+﻿
+DimP 符号对(12) As ZString*10 = {"符号对{xx}","中“”", """", "中‘’", "''", "中《》", "<>", "中【】", "[]", "中「」", "{}", "中（）", "()"}
+
+'初始化符号对
+Sub Init_符号对()
+   Dim i As Integer 
+   For i = 0 To UBound(符号对)
+      Form1.Combo_符号对.AddItem 符号对(i)
+   Next
+   Form1.Combo_符号对.ListIndex = 0
+End Sub
+

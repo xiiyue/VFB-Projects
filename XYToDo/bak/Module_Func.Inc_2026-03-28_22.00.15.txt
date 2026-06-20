@@ -1,0 +1,6 @@
+﻿' 本模块是操作任务数组以及自定义功能
+
+' periodicTasks() As PeriodicTask 周期
+' deferredTasks() As DeferredTask 延期
+' regularTasks() As RegularTask   普通
+
