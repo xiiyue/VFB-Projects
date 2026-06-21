@@ -1,9 +1,10 @@
-﻿#VisualFreeBasic_Project#  Version=6.0.3
+﻿#VisualFreeBasic_Project#  Version=5.8.8
 NumObjects=4
-ProjectName=倍半数
+ProjectName=递增粘贴
 CompilationMode=0
 CompilationDebug=0
 ProjectType=GUI
+UseGDIPlus=-1
 ShowConsole=0
 MultiLanguage=0
 OmitInformation=0
@@ -13,10 +14,8 @@ StrUnicode=0
 UseAdminPriv=0
 DeleteGeneratedCode=-1
 Namespace=0
-AutoAdd64=0
-APIversion=0
 AddCompOps=
-LastRunFilename=倍半数.exe
+LastRunFilename=递增粘贴.exe
 Major=1
 Minor=0
 Revision=0
@@ -24,7 +23,7 @@ Build=0
 FileMajor=1
 FileMinor=0
 FileRevision=0
-FileBuild=3
+FileBuild=0
 AutoIncrement=3
 DefaultCompiler=32
 Comments=
@@ -35,10 +34,12 @@ LegalTrademarks=
 ProductName=
 
 [Objects]
-Form=.\forms\Form1.frm|45|1932|Startup|Yes|
+Form=.\forms\Form1.frm|0|4|Startup|Yes|
 
-TopTab=.\forms\Form1.frm|False|0|45|1932
+TopTab=.\forms\Form1.frm|True|1|0|4
 #END_MAIN_PROPERTIES#
+
+
 [FF_APPSTART_START]
 '************ 应用程序起始模块 ************
 ' 这里是打开软件后最初被执行代码的地方，此时软件内部还未初始化。（注：一般情况EXE包含DLL的，DLL先于EXE执行DLL自己的起始代码）
@@ -49,7 +50,7 @@ TopTab=.\forms\Form1.frm|False|0|45|1932
 #lang "FB"                      '表示为标准FB格式
 #include Once "windows.bi"      'WIN系统基础库，主要是WIN系统常用的API，不使用API可以不包含它。
 #include Once "win/shlobj.bi"   'WIN系统对象库，shell32.dll的头文件，主要涉及shell及通用对话框等。
-#include Once "afx/CWindow.inc" 'WinFBX 库，是WIN系统增强基础库，使用窗口和控件必须要用到它。
+#include once "system/Afx/CWindow.inc" 'WinFBX 库，是WIN系统增强基础库，使用窗口和控件必须要用到它。
 #include Once "vbcompat.bi"     '一些兼容VB的语句和常数，不包含就会无法使用它们了。
 #include Once "fbthread.bi"     'VisualFreeBasic线程语句支持库，要用线程语句，就必须包含。
 
@@ -72,20 +73,6 @@ TopTab=.\forms\Form1.frm|False|0|45|1932
 '6，当工程中包含其它模块时，自动帮你引用。
 '加工过程产生临时文件，在工程属性里设置是否自动删除。
 [FF_APPSTART_END]
-[FF_PUMPHOOK_START]
-Function FF_PUMPHOOK( uMsg As Msg ) As Long '消息钩子
-   '所有窗口消息都经过这里，你可以在这里拦截消息。
-
-   ' 如果这个函数返回 FALSE（零），那么 VisualFreeBasic 消息泵将继续进行。
-   ' 返回 TRUE（非零）将绕过消息泵（屏蔽消息），就是吃掉这消息不给窗口和控件处理。
-   ' 
-
-   Function = False    '如果你需要屏蔽消息，返回 TRUE 。
-
-End Function
-
-
-[FF_PUMPHOOK_END]
 [FF_WINMAIN_START]
 Function FF_WINMAIN(ByVal hInstance As HINSTANCE) As Long '程序入口函数
    'hInstance EXE或DLL的模块句柄，就是在内存中的地址，EXE 通常固定为 &H400000  DLL 一般不固定 
@@ -123,3 +110,18 @@ End Sub
 
 
 [FF_WINMAIN_END]
+[FF_PUMPHOOK_START]
+Function FF_PUMPHOOK( uMsg As Msg ) As Long '消息钩子
+   '所有窗口消息都经过这里，你可以在这里拦截消息。
+
+   ' 如果这个函数返回 FALSE（零），那么 VisualFreeBasic 消息泵将继续进行。
+   ' 返回 TRUE（非零）将绕过消息泵（屏蔽消息），就是吃掉这消息不给窗口和控件处理。
+   ' 
+
+   Function = False    '如果你需要屏蔽消息，返回 TRUE 。
+
+End Function
+
+
+[FF_PUMPHOOK_END]
+

@@ -1,6 +1,6 @@
 ﻿#VisualFreeBasic_Project#  Version=6.0.3
-NumObjects=4
-ProjectName=倍半数
+NumObjects=5
+ProjectName=递增粘贴
 CompilationMode=0
 CompilationDebug=0
 ProjectType=GUI
@@ -16,7 +16,7 @@ Namespace=0
 AutoAdd64=0
 APIversion=0
 AddCompOps=
-LastRunFilename=倍半数.exe
+LastRunFilename=递增粘贴.exe
 Major=1
 Minor=0
 Revision=0
@@ -24,7 +24,7 @@ Build=0
 FileMajor=1
 FileMinor=0
 FileRevision=0
-FileBuild=3
+FileBuild=1
 AutoIncrement=3
 DefaultCompiler=32
 Comments=
@@ -35,9 +35,10 @@ LegalTrademarks=
 ProductName=
 
 [Objects]
-Form=.\forms\Form1.frm|45|1932|Startup|Yes|
+Form=.\forms\Form1.frm|24|1585|Startup|Yes|
+Form=.\forms\Form2.Frm|0|1149||Yes|
 
-TopTab=.\forms\Form1.frm|False|0|45|1932
+TopTab=.\forms\Form1.frm|True|0|27|1585
 #END_MAIN_PROPERTIES#
 [FF_APPSTART_START]
 '************ 应用程序起始模块 ************
@@ -49,7 +50,7 @@ TopTab=.\forms\Form1.frm|False|0|45|1932
 #lang "FB"                      '表示为标准FB格式
 #include Once "windows.bi"      'WIN系统基础库，主要是WIN系统常用的API，不使用API可以不包含它。
 #include Once "win/shlobj.bi"   'WIN系统对象库，shell32.dll的头文件，主要涉及shell及通用对话框等。
-#include Once "afx/CWindow.inc" 'WinFBX 库，是WIN系统增强基础库，使用窗口和控件必须要用到它。
+#include once "system/Afx/CWindow.inc" 'WinFBX 库，是WIN系统增强基础库，使用窗口和控件必须要用到它。
 #include Once "vbcompat.bi"     '一些兼容VB的语句和常数，不包含就会无法使用它们了。
 #include Once "fbthread.bi"     'VisualFreeBasic线程语句支持库，要用线程语句，就必须包含。
 

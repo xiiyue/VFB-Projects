@@ -1,0 +1,502 @@
+﻿#VisualFreeBasic_Form#  Version=6.0.3
+Locked=0
+
+[Form]
+Name=Form1
+Help=False
+ClassStyle=CS_VREDRAW,CS_HREDRAW,CS_DBLCLKS
+ClassName=
+WinStyle=WS_THICKFRAME,WS_CAPTION,WS_SYSMENU,WS_MINIMIZEBOX,WS_MAXIMIZEBOX,WS_CLIPSIBLINGS,WS_CLIPCHILDREN,WS_VISIBLE,WS_EX_WINDOWEDGE,WS_EX_CONTROLPARENT,WS_EX_LEFT,WS_EX_LTRREADING,WS_EX_RIGHTSCROLLBAR,WS_EX_TOPMOST,WS_POPUP,WS_SIZEBOX
+Style=3 - 常规窗口
+Icon=
+Caption=Catia助手
+StartPosition=1 - 屏幕中心
+WindowState=0 - 正常
+Enabled=True
+Repeat=False
+Left=0
+Top=0
+Width=750
+Height=240
+TopMost=True
+Child=False
+MdiChild=False
+TitleBar=True
+SizeBox=True
+SysMenu=True
+MaximizeBox=True
+MinimizeBox=True
+Help=False
+Hscroll=False
+Vscroll=False
+MinWidth=0
+MinHeight=0
+MaxWidth=0
+MaxHeight=0
+NoActivate=False
+MousePass=False
+TransPer=0
+TransColor=SYS,25
+Shadow=0 - 无阴影
+BackColor=SYS,15
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Frame]
+Name=Frame1
+Help=
+Index=-1
+Caption=连续复制
+Frame=True
+TextAlign=0 - 左对齐
+Fillet=5
+BorderWidth=1
+BorderColor=SYS,16
+ForeColor=SYS,8
+BackColor=SYS,25
+Enabled=True
+Visible=True
+Font=微软雅黑,9,0
+Left=5
+Top=5
+Width=360
+Height=180
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label1
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=当前信息：
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=楷体,16,1
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=10
+Top=20
+Width=120
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label_Show
+Help=
+Index=-1
+Style=0 - 无边框
+Caption=未设置
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,12
+FontWidth=0
+FontAngle=0
+TextAlign=3 - 中左对齐
+Prefix=True
+Ellipsis=False
+Left=20
+Top=50
+Width=350
+Height=70
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command_Set
+Help=
+Index=-1
+Caption=前后缀设置
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,11
+Left=130
+Top=20
+Width=130
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command_Copy
+Help=
+Index=0
+Caption=复制
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=楷体,14,1
+Left=10
+Top=140
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command_Copy
+Help=
+Index=1
+Caption=上一个
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=楷体,14,1
+Left=140
+Top=140
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command_Copy
+Help=
+Index=2
+Caption=下一个
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=楷体,14,1
+Left=280
+Top=140
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[YFswitcher]
+Name=YFswitcher1
+Help=
+Index=-1
+Style=0 - 平面圆角1
+Enabled=True
+Visible=True
+Value=True
+Note=0 - 内部
+NoteON=6
+NoteOFF=六
+ImgON=
+ImgOFF=
+ForeColor=&H000000
+BackColor=SYS,15
+NoteONColor=&HFFFFFF
+NoteOFFColor=&H787878
+FillONColor=&HE57300
+FillOFFColor=&HF0F0F0
+LineONColor=-1
+LineOFFColor=&H696969
+LumpONColor=&HFFFFFF
+LumpOFFColor=&H696969
+Left=280
+Top=20
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
+[Line]
+Name=Line1
+Help=
+Index=-1
+Style=1 - 左边
+BorderWidth=1
+ArrowStartW=0 - 无箭头
+ArrowStartH=0 - 无箭头
+ArrowEndW=0 - 无箭头
+ArrowEndH=0 - 无箭头
+BorderColor=&HFF000000
+Enabled=True
+Visible=True
+Left=380
+Top=10
+Width=10
+Height=180
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[TextBox]
+Name=Text_half
+Help=
+Index=-1
+Style=3 - 凹边框
+TextScrollBars=0 - 无滚动条
+Text=
+Enabled=True
+Visible=True
+MaxLength=0
+ForeColor=SYS,8
+BackColor=SYS,5
+Font=微软雅黑,11
+TextAlign=1 - 居中
+PasswordChar=
+Locked=False
+HideSelection=True
+Multiline=False
+Uppercase=False
+Lowercase=False
+Number=False
+AutoHScroll=True
+AutoVScroll=False
+Left=400
+Top=20
+Width=130
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+LeftMargin=0
+RightMargin=0
+AcceptFiles=False
+
+[Label]
+Name=Label_half
+Help=
+Index=0
+Style=0 - 无边框
+Caption=半
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14,1
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=400
+Top=70
+Width=60
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Label]
+Name=Label_half
+Help=
+Index=1
+Style=0 - 无边框
+Caption=倍
+Enabled=True
+Visible=True
+ForeColor=SYS,8
+BackColor=SYS,25
+Font=微软雅黑,14,1
+FontWidth=0
+FontAngle=0
+TextAlign=4 - 置中
+Prefix=True
+Ellipsis=False
+Left=400
+Top=120
+Width=60
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command1
+Help=
+Index=0
+Caption=复制
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,11
+Left=470
+Top=70
+Width=60
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+[Button]
+Name=Command1
+Help=
+Index=1
+Caption=复制
+TextAlign=1 - 居中
+Ico=
+Enabled=True
+Visible=True
+Default=False
+OwnDraw=False
+MultiLine=False
+Font=微软雅黑,11
+Left=470
+Top=120
+Width=60
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+
+
+[AllCode]
+DimP prefix       As String
+DimP suffix       As String
+DimP serial       As String
+DimP text_serial  As String
+DimP num_serial   As Integer
+DimP serial_width As Integer
+
+' 格式化序列号函数(参数：数字，长度)
+Function FormatSerial(num As Integer, wid As Integer) As String
+    Dim limit As Integer
+    Dim result As String
+    
+    limit = 10 ^ wid   ' 计算临界值，如 wid=3 则 limit=1000
+    
+    If num < limit Then
+        ' 不足 wid 位，补前导零
+        result = Right(String(wid, Asc("0")) & Trim(Str(num)), wid)
+    Else
+        ' 超过或等于 limit，直接显示数字（去除多余空格）
+        result = Trim(Str(num))
+    End If
+    
+    Return result
+End Function
+
+' 更新显示的子过程（基于全局变量 num_serial, serial_width, prefix, suffix）
+Sub UpdateDisplay()
+   ' 格式化当前序列号
+   Dim now_serial As String
+   now_serial = FormatSerial(num_serial, serial_width)
+   
+   ' 拼接完整字符串
+   Dim NowInfo As String
+   NowInfo = prefix & now_serial & suffix
+   
+   ' 更新标签显示
+   Label_Show.Caption = NowInfo
+End Sub
+
+
+'[Form1.Command_Set]事件 : 单击
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
+   Form2.Show(Form1.hWnd, True)
+   serial_width = Len(serial)
+   num_serial   = ValInt(serial)
+   UpdateDisplay()
+   AfxSetClipboardText(Label_Show.Caption)
+End Sub
+
+'[Form1.Command_Copy]事件 : 单击
+'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
+'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
+Sub Form1_Command_Copy_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndControl As hWnd)
+
+    Select Case ControlIndex
+        Case 0
+            AfxSetClipboardText(Label_Show.Caption)
+        Case 1
+            ' num_serial 减 1
+            num_serial = num_serial - 1
+            UpdateDisplay()
+            AfxSetClipboardText(Label_Show.Caption)
+            
+        Case 2
+            ' num_serial 加 1
+            num_serial = num_serial + 1
+            UpdateDisplay()
+            AfxSetClipboardText(Label_Show.Caption)           
+        Case Else
+            ' 无操作
+    End Select
+    
+End Sub
+
+
+
+
+
+
+
+
+
