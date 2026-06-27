@@ -219,6 +219,41 @@ Tab=True
 ToolTip=
 ToolTipBalloon=False
 
+[YFswitcher]
+Name=YFswitcher1
+Help=
+Index=-1
+Style=0 - 平面圆角1
+Enabled=True
+Visible=True
+Value=True
+Note=0 - 内部
+NoteON=6
+NoteOFF=六
+ImgON=
+ImgOFF=
+ForeColor=&H000000
+BackColor=SYS,15
+NoteONColor=&HFFFFFF
+NoteOFFColor=&H787878
+FillONColor=&HE57300
+FillOFFColor=&HF0F0F0
+LineONColor=-1
+LineOFFColor=&H696969
+LumpONColor=&HFFFFFF
+LumpOFFColor=&H696969
+Left=280
+Top=20
+Width=70
+Height=30
+Layout=0 - 不锚定
+MousePointer=0 - 默认
+Tag=
+Tab=True
+ToolTip=
+ToolTipBalloon=False
+AcceptFiles=False
+
 [Line]
 Name=Line1
 Help=

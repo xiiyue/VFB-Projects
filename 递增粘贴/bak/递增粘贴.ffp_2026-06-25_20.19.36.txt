@@ -1,6 +1,6 @@
 ﻿#VisualFreeBasic_Project#  Version=6.0.3
 NumObjects=5
-ProjectName=Catia助手
+ProjectName=递增粘贴
 CompilationMode=0
 CompilationDebug=0
 ProjectType=GUI
@@ -16,15 +16,15 @@ Namespace=0
 AutoAdd64=0
 APIversion=0
 AddCompOps=
-LastRunFilename=Catia助手.exe
+LastRunFilename=递增粘贴.exe
 Major=1
 Minor=0
 Revision=0
-Build=7
+Build=0
 FileMajor=1
 FileMinor=0
 FileRevision=0
-FileBuild=9
+FileBuild=7
 AutoIncrement=3
 DefaultCompiler=32
 Comments=
@@ -35,10 +35,10 @@ LegalTrademarks=
 ProductName=
 
 [Objects]
-Form=.\forms\Form1.frm|113|5556|Startup|Yes|
+Form=.\forms\Form1.frm|85|4631|Startup|Yes|
 Form=.\forms\Form2.Frm|0|1365||Yes|
 
-TopTab=.\forms\Form1.frm|True|1|113|5556
+TopTab=.\forms\Form1.frm|True|0|85|4631
 #END_MAIN_PROPERTIES#
 [FF_APPSTART_START]
 '************ 应用程序起始模块 ************
