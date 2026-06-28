@@ -38,7 +38,7 @@ ProductName=
 Form=.\forms\Form1.frm|51|2146|Startup|Yes|
 Form=.\forms\Form2.Frm|0|1365||Yes|
 
-TopTab=.\forms\Form1.frm|True|0|119|6353
+TopTab=.\forms\Form1.frm|True|1|51|2146
 #END_MAIN_PROPERTIES#
 [FF_APPSTART_START]
 '************ 应用程序起始模块 ************

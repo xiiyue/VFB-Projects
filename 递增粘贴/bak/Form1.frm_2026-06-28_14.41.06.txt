@@ -283,38 +283,6 @@ DimP bHookEnabled As Boolean
 ' 自定义消息：通知窗口更新序列号
 #define WM_UPDATE_SERIAL  (WM_USER + 100)
 
-' 数字转中文（逐位替换）
-' 例如：5 -> "五"，10 -> "一零"，2023 -> "二零二三"
-Function NumToText(ByVal num As Integer) As String
-    Dim sNum As String
-    Dim result As String
-    Dim i As Integer
-    Dim ch As String
-
-    sNum = Trim(Str(num))          ' Str() 会保留正数前的空格，需 Trim
-    result = ""
-
-    For i = 1 To Len(sNum)
-        ch = Mid(sNum, i, 1)
-        Select Case ch
-            Case "0": result &= "零"
-            Case "1": result &= "一"
-            Case "2": result &= "二"
-            Case "3": result &= "三"
-            Case "4": result &= "四"
-            Case "5": result &= "五"
-            Case "6": result &= "六"
-            Case "7": result &= "七"
-            Case "8": result &= "八"
-            Case "9": result &= "九"
-            Case "-": result &= "负"   ' 如果可能出现负数，保留负号
-        End Select
-    Next
-
-    Return result
-End Function
-
-
 
 ' 格式化序列号函数(参数：数字，长度)
 Function FormatSerial(num As Integer, wid As Integer) As String
@@ -342,7 +310,7 @@ Sub UpdateDisplay()
    
    ' 数字大写
    If Not YFswitcher_Num.Value Then
-      now_serial = NumToText(num_serial)
+      now_serial = UNum(num_serial)
    End If
    
    ' 拼接完整字符串
@@ -474,10 +442,12 @@ Function Form1_Custom(hWndForm As hWnd, wMsg As UInteger, wParam As wParam, lPar
          
          
       Case WM_UPDATE_SERIAL ' 自定义的消息
-         Sleep(30)
          num_serial = num_serial + 1 ' 序列号自增
          UpdateDisplay() ' 刷新标签显示并复制到剪贴板
-         Return True ' 消息已处理，不再交给系统  
+         Return True ' 消息已处理，不再交给系统
+  
+      Case
+         
    End Select
    Function = FALSE ' 若不想系统继续处理此消息，则应返回 TRUE （俗称吃掉消息）。
    

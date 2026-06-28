@@ -342,7 +342,7 @@ Sub UpdateDisplay()
    
    ' 数字大写
    If Not YFswitcher_Num.Value Then
-      now_serial = NumToText(num_serial)
+      now_serial = UNum(num_serial)
    End If
    
    ' 拼接完整字符串

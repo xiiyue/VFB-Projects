@@ -279,41 +279,6 @@ DimP serial       As String
 DimP text_serial  As String
 DimP num_serial   As Integer
 DimP serial_width As Integer
-DimP bHookEnabled As Boolean
-' 自定义消息：通知窗口更新序列号
-#define WM_UPDATE_SERIAL  (WM_USER + 100)
-
-' 数字转中文（逐位替换）
-' 例如：5 -> "五"，10 -> "一零"，2023 -> "二零二三"
-Function NumToText(ByVal num As Integer) As String
-    Dim sNum As String
-    Dim result As String
-    Dim i As Integer
-    Dim ch As String
-
-    sNum = Trim(Str(num))          ' Str() 会保留正数前的空格，需 Trim
-    result = ""
-
-    For i = 1 To Len(sNum)
-        ch = Mid(sNum, i, 1)
-        Select Case ch
-            Case "0": result &= "零"
-            Case "1": result &= "一"
-            Case "2": result &= "二"
-            Case "3": result &= "三"
-            Case "4": result &= "四"
-            Case "5": result &= "五"
-            Case "6": result &= "六"
-            Case "7": result &= "七"
-            Case "8": result &= "八"
-            Case "9": result &= "九"
-            Case "-": result &= "负"   ' 如果可能出现负数，保留负号
-        End Select
-    Next
-
-    Return result
-End Function
-
 
 
 ' 格式化序列号函数(参数：数字，长度)
@@ -334,24 +299,18 @@ Function FormatSerial(num As Integer, wid As Integer) As String
     Return result
 End Function
 
-' 更新显示（基于全局变量 num_serial, serial_width, prefix, suffix）
+' 更新显示的子过程（基于全局变量 num_serial, serial_width, prefix, suffix）
 Sub UpdateDisplay()
    ' 格式化当前序列号
    Dim now_serial As String
    now_serial = FormatSerial(num_serial, serial_width)
-   
-   ' 数字大写
-   If Not YFswitcher_Num.Value Then
-      now_serial = NumToText(num_serial)
-   End If
    
    ' 拼接完整字符串
    Dim NowInfo As String
    NowInfo = prefix & now_serial & suffix
    
    ' 更新标签显示
-   Form1.Label_Show.Caption = NowInfo
-   AfxSetClipboardText(NowInfo)
+   Label_Show.Caption = NowInfo
 End Sub
 
 
@@ -363,6 +322,7 @@ Sub Form1_Command_Set_BN_Clicked(hWndForm As hWnd, hWndControl As hWnd)
    serial_width = Len(serial)
    num_serial   = ValInt(serial)
    UpdateDisplay()
+   AfxSetClipboardText(Label_Show.Caption)
 End Sub
 
 '[Form1.Command_Copy]事件 : 单击
@@ -376,11 +336,14 @@ Sub Form1_Command_Copy_BN_Clicked(ControlIndex As Long, hWndForm As hWnd, hWndCo
         Case 1
             ' num_serial 减 1
             num_serial = num_serial - 1
-            UpdateDisplay()     
+            UpdateDisplay()
+            AfxSetClipboardText(Label_Show.Caption)
+            
         Case 2
             ' num_serial 加 1
             num_serial = num_serial + 1
-            UpdateDisplay()        
+            UpdateDisplay()
+            AfxSetClipboardText(Label_Show.Caption)           
         Case Else
             ' 无操作
     End Select
@@ -399,19 +362,19 @@ End Sub
 ''                     上下文   = (lKey.flags And 32) : 如果ALT键按下，则值为32；否则，值为0。
 ''                     过渡状态 = (lKey.flags And 64) : 如果按下键，则值为0；如果释放键，则值为64。 
 Function Form1_WinHook1_LowLevelKeyboardProc(ByVal nCode As Integer, ByVal KeyMsg As UInteger, ByRef lKey As KBDLLHOOKSTRUCT) As LResult
-   If nCode = HC_ACTION Then '=HC_ACTION 才是用户处理
-         ' 如果开关处于“开”状态，直接放行，不做任何处理
-      If Not bHookEnabled Then
-         Return CallNextHookEx(0, nCode, KeyMsg, Cast(LPARAM, @lKey))
-      End If
+   if nCode = HC_ACTION Then '=HC_ACTION 才是用户处理
       If KeyMsg = WM_KEYDOWN Or KeyMsg = WM_SYSKEYDOWN Then
          ' 按下的是 V 键，且非释放状态（按下时 flags 不含 64）
          If lKey.vkCode = VK_V And ((lKey.flags And 64) = 0) Then
             ' 实时检测 Ctrl 键是否被按下（左右 Ctrl 均有效）
             Dim bCtrl As Boolean
             bCtrl = ((GetAsyncKeyState(VK_CONTROL) And &H8000) <> 0)
+            
             If bCtrl Then
-               PostMessage(Form1.hWnd, WM_UPDATE_SERIAL, 0, 0) ' 发送消息给Form1
+               ' 自动下一个
+               num_serial = num_serial + 1
+               UpdateDisplay()
+               AfxSetClipboardText(Label_Show.Caption)
             End If
          End If
       End If
@@ -419,74 +382,14 @@ Function Form1_WinHook1_LowLevelKeyboardProc(ByVal nCode As Integer, ByVal KeyMs
    Function = CallNextHookEx(0, nCode, KeyMsg, Cast(lParam, @lKey)) '传递到下一个挂钩过程。
 End Function
 
-'[Form1.YFswitcher_Num]事件 : 开关状态已经改变
-'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
-'newState    新的状态 0=关 非0=开
-Sub Form1_YFswitcher_Num_Change(hWndForm As hWnd, hWndControl As hWnd, newState As Long)
-   UpdateDisplay() 
-End Sub
-
-'[Form1]事件 : 窗口完全显示后。
-'hWndForm  当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'UserData  来自显示窗口最后1个参数，例： Form2.Show(父窗口句柄,模式,UserData)
-Sub Form1_Shown(hWndForm As hWnd, UserData As Integer)
-   bHookEnabled = False
-End Sub
-
 '[Form1.YFswitcher_Auto]事件 : 开关状态已经改变
 'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
 'hWndControl 当前控件的句柄(也是窗口句柄，如果多开本窗口，必须 Me.控件名.hWndForm = hWndForm 后才可以执行后续操作本控件的代码 )
 'newState    新的状态 0=关 非0=开
 Sub Form1_YFswitcher_Auto_Change(hWndForm As hWnd, hWndControl As hWnd, newState As Long)
-   If newState = 0 Then
-      bHookEnabled = True
-   Else
-      bHookEnabled = False
-   End If 
+
+WinHook1.
 End Sub
-
-'[Form1]事件 : 自定义消息（全部消息），在其它事件处理后才轮到本事件。
-'hWndForm    当前窗口的句柄(WIN系统用来识别窗口的一个编号，如果多开本窗口，必须 Me.hWndForm = hWndForm 后才可以执行后续操作本窗口的代码)
-'wMsg        消息值，0--&H400 由WIN系统定义，用户自定义是 WM_USER+** 定义。例 PostMessage( 窗口句柄 , Msg , wParam , lParam ) 
-'wParam      主消息参数，什么作用，由发送消息者定义
-'lParam      副消息参数，什么作用，由发送消息者定义
-Function Form1_Custom(hWndForm As hWnd, wMsg As UInteger, wParam As wParam, lParam As lParam) As LResult
-   Select Case wMsg
-      Case WM_COPYDATA '支持跨进程的窗口消息通信（常用的跨进程通信）
-         Dim 结构 As COPYDATASTRUCT Ptr = Cast(Any Ptr, lParam)
-         Dim 数据 As String, 主消息参数 As Integer = wParam, 副消息参数 As Integer = 结构->dwData
-         If 结构->lpData > 0 And 结构->cbData > 0 Then
-            数据 = String(结构->cbData, 0)
-            memcpy StrPtr(数据), 结构->lpData, 结构->cbData
-         End If
-         '主消息参数 As Integer  发送方自定
-         '副消息参数 As Integer  发送方自定
-         '数据       As String   发送的数据（是任意二进制数据，当然文本也是数据）
-         Return 111 '返回一个数字给发送方
-         '------发送方式--------------
-         '1：Dim 数据 As String
-         '返回=SendDateWnd(接收方窗口句柄,主消息参数,副消息参数,数据)
-         '2：Dim 数据(99) As UByte
-         '返回=SendDateWnd(接收方窗口句柄,主消息参数,副消息参数,@数据(0),UBound(数据)+1)
-         '3：Dim 数据(99) As Long
-         '返回=SendDateWnd(接收方窗口句柄,主消息参数,副消息参数,@数据(0),UBound(数据)*4+4)
-         
-         
-      Case WM_UPDATE_SERIAL ' 自定义的消息
-         Sleep(30)
-         num_serial = num_serial + 1 ' 序列号自增
-         UpdateDisplay() ' 刷新标签显示并复制到剪贴板
-         Return True ' 消息已处理，不再交给系统  
-   End Select
-   Function = FALSE ' 若不想系统继续处理此消息，则应返回 TRUE （俗称吃掉消息）。
-   
-End Function
-
-
-
-
-
 
 
 
